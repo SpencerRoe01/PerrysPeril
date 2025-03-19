@@ -6,6 +6,7 @@ public class WeaponParent : MonoBehaviour
 {
     public GameObject child;
     private float yscale;
+    public GameObject PerryArt;
 
     void Start()
     {
@@ -45,12 +46,20 @@ public class WeaponParent : MonoBehaviour
             Vector3 Scale = transform.localScale;
             Scale.y = -1;
             transform.localScale = Scale;
+
+            Scale = PerryArt.transform.localScale;
+            Scale.x = -1;
+            PerryArt.transform.localScale = Scale;
         }
         else
         {
             Vector3 Scale = transform.localScale;
             Scale.y = 1;
             transform.localScale = Scale;
+
+            Scale = PerryArt.transform.localScale;
+            Scale.x = 1;
+            PerryArt.transform.localScale = Scale;
         }
 
     }
