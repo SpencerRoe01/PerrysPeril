@@ -11,6 +11,12 @@ public class Projectile : MonoBehaviour
     private Vector3 StartPosition;
 
 
+    public Collider2D WideParryCollider;
+   
+    public Collider2D ParryCollider;
+    public Collider2D PerfectParryCollider;
+
+
 
     void Start()
     {
@@ -39,4 +45,12 @@ public class Projectile : MonoBehaviour
     {
         transform.Translate(Vector3.right * Time.deltaTime * MoveSpeed);
     }
-}
+
+
+
+
+   
+
+    }
+
+
