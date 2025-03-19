@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8869437296401088711}
   m_Layer: 0
   m_Name: Circle
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   MoveSpeed: 22
   ParticleOnHitPrefab: {fileID: 0}
   isEnemyProjectile: 1
-  ProjectileRangle: 871.91
+  ProjectileRange: 10
 --- !u!50 &8869437296401088711
 Rigidbody2D:
   serializedVersion: 5
