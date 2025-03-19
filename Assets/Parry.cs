@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Parry : MonoBehaviour
 {
-    public Collider2D WideParryCollider;
 
+    public Collider2D WideParryCollider;
+    public Collider2D WideParryPerfectParryCollider;
     public Collider2D ParryCollider;
     public Collider2D PerfectParryCollider;
-
 
     public Animator SwordAnimator;
 
@@ -26,7 +26,7 @@ public class Parry : MonoBehaviour
         {
             SwordAnimator.SetTrigger("WideSwing");
             WideParryCollider.enabled = true;
-
+            WideParryPerfectParryCollider.enabled = true;
         }
         if (Input.GetMouseButtonDown(1))
         {
@@ -35,21 +35,28 @@ public class Parry : MonoBehaviour
             PerfectParryCollider.enabled = true;
         }
     }
-
-    public void ParryMeathod(string TypeOfParry) 
+    void OnTriggerEnter2D(Collider2D other) 
     {
-        if (TypeOfParry == "Perfect")
+
+        if (other == WideParryPerfectParryCollider)
         {
-            //Perfect Parry
+
+            //deflect with perfect parry
+
         }
-        else if (TypeOfParry == "Regular") 
+        else if (other == WideParryCollider) 
         { 
-            // regular Parry 
+            // deflect regualr
         }
 
-        if (TypeOfParry == "Wide") 
+        if (other == PerfectParryCollider)
         {
-            Debug.Log("Wide PArry");
+            // perfect parry
         }
+        else if (other == ParryCollider)
+        { 
+            // parry
+        }
+    
     }
 }
