@@ -10,12 +10,15 @@ public class Projectile : MonoBehaviour
 
     private Vector3 StartPosition;
 
+    public Vector2 MoveDirection;
+
 
 
     void Start()
     {
         StartPosition = transform.position;
         Destroy(gameObject, ProjectileRange);
+        MoveDirection = transform.right;
     }
     void Update()
     {
@@ -37,6 +40,6 @@ public class Projectile : MonoBehaviour
 
     private void MoveProjectile()
     {
-        transform.Translate(Vector3.right * Time.deltaTime * MoveSpeed);
+        transform.Translate(MoveDirection * MoveSpeed * Time.deltaTime, Space.World);
     }
 }
