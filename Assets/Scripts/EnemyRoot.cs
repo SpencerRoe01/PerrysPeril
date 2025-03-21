@@ -56,11 +56,7 @@ public class EnemyRoot : MonoBehaviour
     {
         //play Shoot animation
     }
-    void Die()
-    {
-        // play Die animation 
-        Destroy(gameObject);
-    }
+    
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Projectile" )

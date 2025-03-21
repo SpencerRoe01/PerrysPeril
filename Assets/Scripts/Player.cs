@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
 
 
 
-	// do Physics Calcs here
+	
 	void Update () 
 	{
 		if(!(DashCounter > 0)){
@@ -85,9 +85,10 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Projectile")
         {
-            if (other.gameObject.GetComponent<Projectile>().isEnemyProjectile == true && !IsDashing)
+            if (other.gameObject.GetComponent<Projectile>().isEnemyProjectile == true && !IsDashing && !GetComponent<Parry>().PerfectParryStunCollider.enabled)
             {
                 Health -= 1;
+
                 other.gameObject.GetComponent<Projectile>().DestoyProjectile();
             }
 			

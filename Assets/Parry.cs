@@ -8,6 +8,7 @@ public class Parry : MonoBehaviour
 
     public Collider2D ParryCollider;
     public Collider2D PerfectParryCollider;
+    public Collider2D PerfectParryStunCollider;
 
     public Animator SwordAnimator;
     public float colliderActiveTime = 0.5f;
@@ -59,18 +60,31 @@ public class Parry : MonoBehaviour
         if (name == "PerfectParryCollider")
         {
             Debug.Log("Perfect!");
+            other.gameObject.GetComponent<Projectile>().isEnemyProjectile = false;
+            PerfectParryStunCollider.enabled = true;
+            StartCoroutine(DisableColliderAfterDelay(PerfectParryStunCollider, .5f));
 
 
         }
         if (name == "RegularParryCollider")
         {
 
-            
-            Vector2 NewDirection = (other.gameObject.GetComponent<Projectile>().EnemyWhoShotProjectile.transform.position - gameObject.transform.position).normalized;
-            other.gameObject.GetComponent<Projectile>().MoveDirection = NewDirection;
-            other.gameObject.GetComponent<Projectile>().MoveSpeed = other.gameObject.GetComponent<Projectile>().MoveSpeed + 10;
-            PerfectParryCollider.enabled = false;
-            other.gameObject.GetComponent<Projectile>().isEnemyProjectile = false;
+            if (other.gameObject.GetComponent<Projectile>().EnemyWhoShotProjectile != null)
+            {
+                Vector2 NewDirection = (other.gameObject.GetComponent<Projectile>().EnemyWhoShotProjectile.transform.position - gameObject.transform.position).normalized;
+                other.gameObject.GetComponent<Projectile>().MoveDirection = NewDirection;
+                other.gameObject.GetComponent<Projectile>().MoveSpeed = other.gameObject.GetComponent<Projectile>().MoveSpeed + 10;
+                PerfectParryCollider.enabled = false;
+                other.gameObject.GetComponent<Projectile>().isEnemyProjectile = false;
+            }
+            else 
+            {
+                Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 NewDirection = (MousePos - gameObject.transform.position).normalized;
+                other.gameObject.GetComponent<Projectile>().MoveDirection = NewDirection;
+                other.gameObject.GetComponent<Projectile>().MoveSpeed = other.gameObject.GetComponent<Projectile>().MoveSpeed + 5;
+                other.gameObject.GetComponent<Projectile>().isEnemyProjectile = false;
+            }
 
         }
     }
