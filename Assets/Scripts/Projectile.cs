@@ -12,6 +12,9 @@ public class Projectile : MonoBehaviour
 
     public Vector2 MoveDirection;
 
+    
+    public GameObject EnemyWhoShotProjectile;
+
 
 
     void Start()
@@ -19,6 +22,8 @@ public class Projectile : MonoBehaviour
         StartPosition = transform.position;
         Destroy(gameObject, ProjectileRange);
         MoveDirection = transform.right;
+        transform.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z);
+
     }
     void Update()
     {
@@ -26,10 +31,7 @@ public class Projectile : MonoBehaviour
 
     }
 
-    public bool GetIsEnemyProjectile()
-    {
-        return isEnemyProjectile;
-    }
+    
 
     public void UpdateMoveSpeed(float moveSpeed)
     {
@@ -41,5 +43,9 @@ public class Projectile : MonoBehaviour
     private void MoveProjectile()
     {
         transform.Translate(MoveDirection * MoveSpeed * Time.deltaTime, Space.World);
+    }
+    public void DestoyProjectile() 
+    {
+        Destroy(gameObject);
     }
 }

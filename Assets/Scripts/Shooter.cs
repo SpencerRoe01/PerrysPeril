@@ -84,6 +84,7 @@ public class Shooter : MonoBehaviour
                 Vector2 Position = FindBulletSpawnPosition(CurrentAngle);
 
                 GameObject NewBullet = Instantiate(BulletPrefab, Position, Quaternion.identity);
+                NewBullet.GetComponent<Projectile>().EnemyWhoShotProjectile = gameObject;
 
                 NewBullet.transform.right = NewBullet.transform.position - transform.position;
 

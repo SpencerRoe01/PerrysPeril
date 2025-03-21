@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6459068819304308210}
   - component: {fileID: 8869437296401088711}
   - component: {fileID: 2867161775617431477}
+  - component: {fileID: 323627186938298249}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Projectile
@@ -30,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.75, y: 6.27, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,7 +80,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 4056058344551517612, guid: d1164054ec8d5a94baf92ddeb45b15dd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,6 +107,8 @@ MonoBehaviour:
   ParticleOnHitPrefab: {fileID: 0}
   isEnemyProjectile: 1
   ProjectileRange: 10
+  MoveDirection: {x: 0, y: 0}
+  EnemyWhoShotProjectile: {fileID: 0}
 --- !u!50 &8869437296401088711
 Rigidbody2D:
   serializedVersion: 5
@@ -132,7 +135,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &2867161775617431477
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -169,3 +172,15 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
+--- !u!114 &323627186938298249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5405752648547703117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2add55ce982f2d4e8921b0b94867211, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

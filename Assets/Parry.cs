@@ -35,8 +35,10 @@ public class Parry : MonoBehaviour
         {
             SwordAnimator.SetTrigger("Parry");
             PerfectParryCollider.enabled = true;
-            StartCoroutine(EnableRegularParryAfterDelay(ParryCollider, 0.08f));
-            StartCoroutine(DisableColliderAfterDelay(ParryCollider, colliderActiveTime - 0.08f));
+            ParryCollider.enabled = true;
+
+
+            StartCoroutine(DisableColliderAfterDelay(ParryCollider, colliderActiveTime));
             StartCoroutine(DisableColliderAfterDelay(PerfectParryCollider, colliderActiveTime));
         }
     }
@@ -52,6 +54,7 @@ public class Parry : MonoBehaviour
             Vector2 NewDirection = (MousePos - gameObject.transform.position).normalized;
             other.gameObject.GetComponent<Projectile>().MoveDirection = NewDirection;
             other.gameObject.GetComponent<Projectile>().MoveSpeed = other.gameObject.GetComponent<Projectile>().MoveSpeed + 5;
+            other.gameObject.GetComponent<Projectile>().isEnemyProjectile = false;
         }
         if (name == "PerfectParryCollider")
         {
@@ -62,11 +65,12 @@ public class Parry : MonoBehaviour
         if (name == "RegularParryCollider")
         {
 
-            Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 NewDirection = (MousePos - gameObject.transform.position).normalized;
+            
+            Vector2 NewDirection = (other.gameObject.GetComponent<Projectile>().EnemyWhoShotProjectile.transform.position - gameObject.transform.position).normalized;
             other.gameObject.GetComponent<Projectile>().MoveDirection = NewDirection;
-            other.gameObject.GetComponent<Projectile>().MoveSpeed = other.gameObject.GetComponent<Projectile>().MoveSpeed + 90;
+            other.gameObject.GetComponent<Projectile>().MoveSpeed = other.gameObject.GetComponent<Projectile>().MoveSpeed + 10;
             PerfectParryCollider.enabled = false;
+            other.gameObject.GetComponent<Projectile>().isEnemyProjectile = false;
 
         }
     }
@@ -76,10 +80,5 @@ public class Parry : MonoBehaviour
         yield return new WaitForSeconds(delay);
         col.enabled = false;
     }
-    IEnumerator EnableRegularParryAfterDelay(Collider2D col, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        col.enabled = true;
-
-    }
+    
 }
