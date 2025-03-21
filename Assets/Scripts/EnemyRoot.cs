@@ -26,28 +26,31 @@ public class EnemyRoot : MonoBehaviour
         {
             IsStunned = true;
         }
-        
-        if (IsStunned) 
+
+        if (Health <= 0)
         {
-            Debug.Log("a");
+           
             //play stun animation
 
 
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
             foreach (Behaviour behaviour in transform.parent.GetComponents<Behaviour>())
             {
-                behaviour.enabled = true;
+                behaviour.enabled = false;
 
             }
-            transform.parent.GetComponent<SpriteRenderer>().enabled = true;
+            transform.parent.GetComponent<SpriteRenderer>().enabled = false;
 
-            Health = 1;
+
             StartCoroutine(StunCoroutine(StunDuration));
-            IsStunned = false;
-            Debug.Log("g");
-            
+            Health = 1;
+
+
+
 
         }
+        
+        
     }
     public void PlayShootAnimation()
     {
@@ -60,27 +63,36 @@ public class EnemyRoot : MonoBehaviour
     }
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Projectile")
+        if (other.gameObject.tag == "Projectile" )
         {
-            if (other.gameObject.GetComponent<Projectile>().isEnemyProjectile == false) 
+            if (other.gameObject.GetComponent<Projectile>().isEnemyProjectile == false)
             {
                 Health -= 1;
-                
-                gameObject.GetComponent<SpriteRenderer>().enabled = true;
-                foreach (Behaviour behaviour in transform.parent.GetComponents<Behaviour>())
-                {
-                    behaviour.enabled = false;
-
-                }
-                transform.parent.GetComponent<SpriteRenderer>().enabled = false;
-                other.gameObject.GetComponent<Projectile>().DestoyProjectile();           
+                other.gameObject.GetComponent<Projectile>().DestoyProjectile();
             }
+            
+
         }
 
     }
     private IEnumerator StunCoroutine(float duration)
     {
- 
+       
         yield return new WaitForSeconds(duration);
+        IsStunned = false;
+        
+
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        foreach (Behaviour behaviour in transform.parent.GetComponents<Behaviour>())
+        {
+            behaviour.enabled = true;
+
+        }
+        transform.parent.GetComponent<SpriteRenderer>().enabled = true;
+    }
+    public void DestroyEnemy() 
+    {
+
+        Destroy(gameObject.transform.parent.gameObject);
     }
     }

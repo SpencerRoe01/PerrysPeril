@@ -5,17 +5,23 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float PlayerMoveSpeed = 0f;
-	 private float PlayerMovementX = 0f;
-	 private float PlayerMovementY = 0f;
+	private float PlayerMovementX = 0f;
+	private float PlayerMovementY = 0f;
 
 
-	 public float ActiveMoveSpeed;
-	 public float DashSpeed;
+	public float ActiveMoveSpeed;
+	public float DashSpeed;
 
-	 public float DashLength = .5f, DashCooldown = 1f;
+	public float DashLength = .5f, DashCooldown = 1f;
 
-	 private float DashCounter;
-	 private float DashCoolCounter;
+	public float DashCounter;
+	public float DashCoolCounter;
+
+	public int Health;
+	public bool IsDashing;
+
+	private bool KilledAnEnemyOnDash;
+	
 
 
 
@@ -47,18 +53,27 @@ public class Player : MonoBehaviour
 		
 		}
 
-		if(DashCounter > 0)
+		if (DashCounter > 0)
 		{
+			IsDashing = true;
 			DashCounter -= Time.deltaTime;
 
-			if(DashCounter <= 0)
+			if (DashCounter <= 0)
 			{
 				ActiveMoveSpeed = PlayerMoveSpeed;
-				DashCoolCounter = DashCooldown;
+				if (!KilledAnEnemyOnDash)
+				{
+					DashCoolCounter = DashCooldown;
+				}
+				KilledAnEnemyOnDash = false;
 			}
 		}
+		else 
+		{
+			IsDashing = false;
+		}
 
-		if(DashCoolCounter > 0)
+		if (DashCoolCounter > 0)
 		{
 			DashCoolCounter -= Time.deltaTime;
 		}
@@ -66,4 +81,28 @@ public class Player : MonoBehaviour
 
 
 	}
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Projectile")
+        {
+            if (other.gameObject.GetComponent<Projectile>().isEnemyProjectile == true && !IsDashing)
+            {
+                Health -= 1;
+                other.gameObject.GetComponent<Projectile>().DestoyProjectile();
+            }
+			
+
+
+        }
+		if (other.gameObject.tag == "Enemy") 
+		{
+			if (other.gameObject.GetComponent<EnemyRoot>().IsStunned && IsDashing) 
+			{
+				other.gameObject.GetComponent<EnemyRoot>().DestroyEnemy();
+				DashCoolCounter = 0;
+				KilledAnEnemyOnDash = true;
+			}
+		}
+
+    }
 }
