@@ -22,6 +22,8 @@ public class EnemyRoot : MonoBehaviour
     private void Update()
     {
        
+
+
         if (Health <= 0) 
         {
             IsStunned = true;
@@ -91,4 +93,8 @@ public class EnemyRoot : MonoBehaviour
 
         Destroy(gameObject.transform.parent.gameObject);
     }
-    }
+
+
+
+   
+}
