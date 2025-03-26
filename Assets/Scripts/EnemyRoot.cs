@@ -12,17 +12,29 @@ public class EnemyRoot : MonoBehaviour
 
     public Animator Animator;
 
-    
+    private Coroutine stunCoroutine;
+
+
+
 
     private void Start()
     {
         transform.parent.gameObject.GetComponent<AIPath>().maxSpeed = MoveSpeed;
+        transform.parent.GetComponent<Shooter>().Player = GameObject.FindGameObjectWithTag("Player");
+
     }
+    
 
     private void Update()
     {
-       
 
+        if (transform.parent.Find("ExplodeRad") != null) 
+        {
+            if (transform.parent.Find("ExplodeRad").GetComponent<ExplodingEnemyScript>().Exploding) 
+            {
+                Health = 1;
+            }
+        }
 
         if (Health <= 0) 
         {
@@ -44,7 +56,10 @@ public class EnemyRoot : MonoBehaviour
             transform.parent.GetComponent<SpriteRenderer>().enabled = false;
 
 
-            StartCoroutine(StunCoroutine(StunDuration));
+            if (stunCoroutine == null)
+            {
+                 stunCoroutine = StartCoroutine(StunCoroutine(StunDuration));
+            }
             Health = 1;
 
 
@@ -87,6 +102,8 @@ public class EnemyRoot : MonoBehaviour
 
         }
         transform.parent.GetComponent<SpriteRenderer>().enabled = true;
+
+        stunCoroutine = null;
     }
     public void DestroyEnemy() 
     {
