@@ -38,7 +38,7 @@ public class Shooter : MonoBehaviour
 
     public void Attack()
     {
-        if (!IsShooting)
+        if (!IsShooting  )
         {
             StartCoroutine(ShootRoutine());
         }
@@ -60,6 +60,10 @@ public class Shooter : MonoBehaviour
 
         for (int i = 0; i < BurstCount; i++)
         {
+            if (transform.GetChild(0).GetComponent<EnemyRoot>().IsStunned) 
+            {
+                break;
+            }
             if (!Oscillate)
             {
                 TargetConeOfInfluence(out StartAngle, out CurrentAngle, out AngleStep, out EndAngle);
@@ -84,6 +88,7 @@ public class Shooter : MonoBehaviour
                 Vector2 Position = FindBulletSpawnPosition(CurrentAngle);
 
                 GameObject NewBullet = Instantiate(BulletPrefab, Position, Quaternion.identity);
+                NewBullet.GetComponent<Projectile>().EnemyWhoShotProjectile = gameObject;
 
                 NewBullet.transform.right = NewBullet.transform.position - transform.position;
 
