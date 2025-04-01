@@ -1143,8 +1143,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Music: []
   SFX: []
-  MusicSource: {fileID: 0}
-  SFXSource: {fileID: 0}
+  MusicSource: {fileID: 20233560}
+  SFXSource: {fileID: 990284335}
+  MSlider: {fileID: 0}
+  SSlider: {fileID: 0}
 --- !u!4 &1702935301
 Transform:
   m_ObjectHideFlags: 0
