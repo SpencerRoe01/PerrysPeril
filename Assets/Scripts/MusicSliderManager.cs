@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 public class MusicSliderManager : MonoBehaviour{
-    public Slider mSlider;
-    public TextMeshProUGUI mText;
+    public Slider MSlider;
+    public TextMeshProUGUI MText;
+    public SoundManager SManager;
     void Start(){
-        
+        SManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        MSlider.value = SManager.GetMusicVolume();
     }
     void Update(){
-        mText.text = "Music Volume: " + mSlider.value.ToString();
+        MText.text = "Music Volume: " + MSlider.value.ToString();
     }
 }

@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour{
+    private static SoundManager instance;
     public Sound[] Music;
     public Sound[] SFX;
     public AudioSource MusicSource;
@@ -12,7 +13,13 @@ public class SoundManager : MonoBehaviour{
     public Slider MSlider;
     public Slider SSlider;
     void Awake(){
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(this);
+        if(instance==null){
+            instance = this;
+        }
+        else{
+            Destroy(gameObject);
+        }
     }
     void Update(){
         if(SceneManager.GetActiveScene().name == "Settings Menu"){
@@ -26,5 +33,11 @@ public class SoundManager : MonoBehaviour{
         SFXVolume = (int) SSlider.value;
         MusicSource.volume = MusicVolume/100f;
         SFXSource.volume = SFXVolume/100f;
+    }
+    public int GetMusicVolume(){
+        return MusicVolume;
+    }
+    public int GetSFXVolume(){
+        return SFXVolume;
     }
 }

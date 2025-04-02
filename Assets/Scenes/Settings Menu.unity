@@ -350,8 +350,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f9cdd64476b8b246b78272c3403f54d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sSlider: {fileID: 294389442}
-  sText: {fileID: 891764685}
+  SSlider: {fileID: 294389442}
+  SText: {fileID: 891764685}
+  SManager: {fileID: 0}
 --- !u!1 &412009761
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,8 +1225,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f94a99d6ab3c2d45bf1a5ff08e3e79b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mSlider: {fileID: 1566051331}
-  mText: {fileID: 412009763}
+  MSlider: {fileID: 1566051331}
+  MText: {fileID: 412009763}
+  SManager: {fileID: 0}
 --- !u!114 &1566051331
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 public class SFXSliderManager : MonoBehaviour{
-    public Slider sSlider;
-    public TextMeshProUGUI sText;
+    public Slider SSlider;
+    public TextMeshProUGUI SText;
+    public SoundManager SManager;
     void Start(){
-        
+        SManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
+        SSlider.value = SManager.GetSFXVolume();
     }
     void Update(){
-        sText.text = "SFX Volume: " + sSlider.value.ToString();
+        SText.text = "SFX Volume: " + SSlider.value.ToString();
     }
 }
