@@ -84,6 +84,7 @@ MonoBehaviour:
   Exploding: 0
   Particle: {fileID: 5344426800498080065}
   Explosion: {fileID: 4877231503394794067, guid: a5058154ce595c34cba71f762f3a4132, type: 3}
+  LevelManager: {fileID: 0}
 --- !u!1 &3949686633200297903
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,6 +317,7 @@ MonoBehaviour:
   Stagger: 0
   Oscillate: 0
   AiPath: {fileID: 2742228640518690130}
+  EnemyRoot: {fileID: 8363158077056238003}
 --- !u!95 &498365422727576815
 Animator:
   serializedVersion: 7
@@ -5269,6 +5271,8 @@ MonoBehaviour:
   StunDuration: 5
   IsRoamingEnemy: 0
   Animator: {fileID: 498365422727576815}
+  LevelManager: {fileID: 0}
+  AiPath: {fileID: 2742228640518690130}
 --- !u!58 &324159332107739673
 CircleCollider2D:
   m_ObjectHideFlags: 0

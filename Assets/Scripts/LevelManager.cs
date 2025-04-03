@@ -11,6 +11,11 @@ public class LevelManager : MonoBehaviour
     public int MaxEnemiesAllowedInScene;
     public Transform[] SpawmPointPositions;
 
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Update()
     {
         if (EnemiesInScene.Count == 0 && EnemiesToSpawn.Count == 0)

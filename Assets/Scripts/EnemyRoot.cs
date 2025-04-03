@@ -13,6 +13,9 @@ public class EnemyRoot : MonoBehaviour
     public Animator Animator;
 
     private Coroutine stunCoroutine;
+    public LevelManager LevelManager;
+
+    public AIPath AiPath;
 
 
 
@@ -28,6 +31,11 @@ public class EnemyRoot : MonoBehaviour
     private void Update()
     {
 
+        if (AiPath.reachedDestination) { Animator.SetBool("moving", false); }
+        else {Animator.SetBool("moving", true); }
+
+
+            LevelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         if (transform.parent.Find("ExplodeRad") != null) 
         {
             if (transform.parent.Find("ExplodeRad").GetComponent<ExplodingEnemyScript>().Exploding) 
@@ -71,7 +79,7 @@ public class EnemyRoot : MonoBehaviour
     }
     public void PlayShootAnimation()
     {
-        //play Shoot animation
+        Animator.SetTrigger("shoot");
     }
     
     public void OnTriggerEnter2D(Collider2D other)
@@ -107,7 +115,7 @@ public class EnemyRoot : MonoBehaviour
     }
     public void DestroyEnemy() 
     {
-
+        LevelManager.EnemiesInScene.Remove(transform.parent.gameObject);
         Destroy(gameObject.transform.parent.gameObject);
     }
 

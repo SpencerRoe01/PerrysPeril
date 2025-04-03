@@ -225,6 +225,7 @@ MonoBehaviour:
   Stagger: 0
   Oscillate: 0
   AiPath: {fileID: 7792071585488217909}
+  EnemyRoot: {fileID: 8891539120744377738}
 --- !u!50 &4998282456989576572
 Rigidbody2D:
   serializedVersion: 5
@@ -339,8 +340,9 @@ MonoBehaviour:
   IsStunned: 0
   StunDuration: 4
   IsRoamingEnemy: 0
-  Animator: {fileID: 0}
-  Player: {fileID: 0}
+  Animator: {fileID: 5952738276622537605}
+  LevelManager: {fileID: 0}
+  AiPath: {fileID: 7792071585488217909}
 --- !u!212 &1393654980868149308
 SpriteRenderer:
   m_ObjectHideFlags: 0
