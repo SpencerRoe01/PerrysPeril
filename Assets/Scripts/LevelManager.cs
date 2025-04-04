@@ -98,12 +98,13 @@ public class LevelManager : MonoBehaviour
         }
         else if (level != 1)
         {
-            SceneManager.LoadScene(1);
+            StartCoroutine(DelaySceneLoad(4f, 1));
         }
         else
         {
             level++;
-            StartCoroutine(DelaySceneLoad(4f));
+            StartCoroutine(DelaySceneLoad(4f,level));
+
 
         }
         
@@ -122,12 +123,12 @@ public class LevelManager : MonoBehaviour
 
         }
     }
-    IEnumerator DelaySceneLoad(float delay)
+    IEnumerator DelaySceneLoad(float delay, int Level)
     {
 
         yield return new WaitForSeconds(delay);
         
 
-        SceneManager.LoadScene(level);
+        SceneManager.LoadScene(Level);
     }
 }
