@@ -305,7 +305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8ed5ab37a653a243bc31baf8332f7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletPrefab: {fileID: 5405752648547703117, guid: c48dbb07e77e33f428265b17ebae8203, type: 3}
+  BulletPrefab: {fileID: 5405752648547703117, guid: a25c770410d93c64f9450122b91d7b08, type: 3}
   Player: {fileID: 0}
   BulletMoveSpeed: 20
   BurstCount: 1

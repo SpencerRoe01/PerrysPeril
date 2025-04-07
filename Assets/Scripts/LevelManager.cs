@@ -1,15 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Timers;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 
 public class LevelManager : MonoBehaviour
 {
-
     public List<GameObject> EnemiesToSpawn = new List<GameObject>();
     public List<GameObject> EnemiesInScene = new List<GameObject>();
 
@@ -25,110 +20,162 @@ public class LevelManager : MonoBehaviour
 
     private static LevelManager instance;
 
+    public bool NewSceneLoading;
+    public bool isUpgradeLevel;
+
     void Awake()
-    {  
+    {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); 
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
-
     }
 
     void OnEnable()
     {
-        // Subscribe to the scene loaded event
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void OnDisable()
     {
-        // Unsubscribe from the event when the object is disabled
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        switch (level) 
-        { 
-            case 2:
-                EnemiesToSpawn = Level1EnemiesToSpawn; break;
+        NewSceneLoading = false;
+
+        // Load enemies based on the current level
+        switch (level)
+        {
             case 3:
-                EnemiesToSpawn = Level2EnemiesToSpawn; break;
+                EnemiesToSpawn = Level1EnemiesToSpawn;
+                break;
             case 4:
-                EnemiesToSpawn = Level3EnemiesToSpawn; break;
+                EnemiesToSpawn = Level2EnemiesToSpawn;
+                break;
             case 5:
-                EnemiesToSpawn = Level4EnemiesToSpawn; break;
+                EnemiesToSpawn = Level3EnemiesToSpawn;
+                break;
+            case 6:
+                EnemiesToSpawn = Level4EnemiesToSpawn;
+                break;
         }
     }
-
-
-
-
 
     void Update()
     {
-        
-        
-         if (EnemiesToSpawn.Count > 0 && EnemiesInScene.Count <= MaxEnemiesAllowedInScene && level != 1) 
+       
+        { 
+
+        }
+        if (EnemiesToSpawn.Count > 0 && EnemiesInScene.Count <= MaxEnemiesAllowedInScene && level != 1)
         {
             SpawnEnemy();
         }
-        StartCoroutine(CheckIfEnemiesAreDead(2f));
 
+        if (!NewSceneLoading)
+        {
+            StartCoroutine(CheckIfEnemiesAreDead(2f));
+        }
+
+
+        if (isUpgradeLevel)
+        {
+            CheckForUpgradeCompletion();
+        }
     }
-    public void SpawnEnemy() 
+
+    public void SpawnEnemy()
     {
         int SpawnPointIndex = Random.Range(0, SpawmPointPositions.Length);
         GameObject SpawnedEnemy = Instantiate(EnemiesToSpawn[0], SpawmPointPositions[SpawnPointIndex].position, Quaternion.identity);
         EnemiesToSpawn.RemoveAt(0);
         EnemiesInScene.Add(SpawnedEnemy);
     }
+
     public void LoadNextScene()
     {
-         if (level == 0)
+        if (NewSceneLoading)
+            return;
+
+        NewSceneLoading = true;
+
+        if (level == 0)
         {
-            level = 2;
-            SceneManager.LoadScene(2);
+            level = 3;
+            SceneManager.LoadScene(3);
         }
-        else if (level != 1)
+        else if (!isUpgradeLevel)
         {
-            StartCoroutine(DelaySceneLoad(4f, 1));
+            Debug.Log("Loading upgrade level");
+            StartCoroutine(DelaySceneLoad(4f, "UpgradeScene"));
         }
-        else
+        else if (GameObject.Find("UpgradeManager") != null && GameObject.Find("UpgradeManager").GetComponent<UpgradeClass>().AllUpgradesUsed)
         {
+            Debug.Log("Loading regular level");
+            GameObject.Find("UpgradeManager").GetComponent<UpgradeClass>().AllUpgradesUsed = false;
             level++;
-            StartCoroutine(DelaySceneLoad(4f,level));
-
-
+            StartCoroutine(DelaySceneLoad(4f, level));
         }
-        
-
     }
+
     IEnumerator CheckIfEnemiesAreDead(float delay)
     {
-
         yield return new WaitForSeconds(delay);
-
 
         if (EnemiesInScene.Count == 0 && EnemiesToSpawn.Count == 0 && level != 0 && level != 1)
         {
-
-            LoadNextScene();
-
+            if (!NewSceneLoading)
+            {
+                LoadNextScene();
+            }
         }
     }
-    IEnumerator DelaySceneLoad(float delay, int Level)
+
+    IEnumerator DelaySceneLoad(float delay, object levelOrSceneName)
     {
-
         yield return new WaitForSeconds(delay);
-        
 
-        SceneManager.LoadScene(Level);
+        if (levelOrSceneName is int)
+        {
+            SceneManager.LoadScene((int)levelOrSceneName);
+        }
+        else if (levelOrSceneName is string && (string)levelOrSceneName == "UpgradeScene")
+        {
+
+            SceneManager.LoadScene("UpgradeScene");
+            isUpgradeLevel = true;
+        }
+
+        NewSceneLoading = false;
+    }
+
+
+    void CheckForUpgradeCompletion()
+    {
+        if (GameObject.Find("UpgradeManager") != null)
+        {
+            var upgradeManager = GameObject.Find("UpgradeManager").GetComponent<UpgradeClass>();
+
+            if (upgradeManager.AllUpgradesUsed)
+            {
+
+                GameObject.Find("UpgradeManager").GetComponent<UpgradeClass>().AllUpgradesUsed = false;
+                level++;
+                StartCoroutine(DelaySceneLoad(4f, level));
+                isUpgradeLevel = false;
+            }
+        }
+    }
+
+    public void LoadSettingScene()
+    {
+        SceneManager.LoadScene(1);
     }
 }

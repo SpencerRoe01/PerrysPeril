@@ -9,16 +9,19 @@ EditorBuildSettings:
     path: Assets/Scenes/Start Menu.unity
     guid: fd59a5d5c5b3c85478198e0c31aa3bda
   - enabled: 1
+    path: Assets/Scenes/Settings Menu.unity
+    guid: 71cf8754673419a469f26c81fdaaeec5
+  - enabled: 1
     path: Assets/Scenes/UpgradeScene.unity
     guid: 9bf76d27876bda74db3b01947ee3490c
   - enabled: 1
     path: Assets/Scenes/Level 1(Forest).unity
     guid: 9579e64fed4842844a42cf591b5e6ebb
   - enabled: 1
+    path: Assets/Scenes/Level2Test.unity
+    guid: 1e4d0793df2ac36438a7f5a07f8fdb4c
+  - enabled: 0
     path: Assets/Scenes/Gameplay.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/Settings Menu.unity
-    guid: 71cf8754673419a469f26c81fdaaeec5
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

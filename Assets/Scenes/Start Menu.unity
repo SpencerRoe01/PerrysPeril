@@ -914,9 +914,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Manager, Assembly-CSharp
-        m_MethodName: SettingsScene
+      - m_Target: {fileID: 82678090814861857}
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+        m_MethodName: LoadSettingScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1204,7 +1204,8 @@ MonoBehaviour:
   EnemiesInScene: []
   Level1EnemiesToSpawn:
   - {fileID: 809202600740939711, guid: 11f318039efad5e41877fd78ef94d45e, type: 3}
-  Level2EnemiesToSpawn: []
+  Level2EnemiesToSpawn:
+  - {fileID: 3949686633200297903, guid: bef37df436ea6a24c87e8e34820c23fc, type: 3}
   Level3EnemiesToSpawn: []
   Level4EnemiesToSpawn: []
   MaxEnemiesAllowedInScene: 2
@@ -1214,6 +1215,8 @@ MonoBehaviour:
   - {fileID: 7247561969721537916}
   - {fileID: 4355342344465690625}
   - {fileID: 7041944337756969972}
+  NewSceneLoading: 0
+  isUpgradeLevel: 0
 --- !u!212 &1277645621141759504
 SpriteRenderer:
   m_ObjectHideFlags: 0

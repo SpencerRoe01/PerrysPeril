@@ -13,7 +13,7 @@ public class UpgradeClass : MonoBehaviour
     {
         if (AllUpgradesUsed) 
         {
-            
+            AllUpgradesUsed = false;
             StartCoroutine(DelayedMethodCoroutine(2f));
         }
     }
