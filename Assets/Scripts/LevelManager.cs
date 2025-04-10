@@ -173,9 +173,7 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-
-    public void LoadSettingScene()
-    {
+    public void LoadSettingScene(){
         SceneManager.LoadScene(1);
     }
 }
