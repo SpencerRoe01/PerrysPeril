@@ -817,6 +817,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f7bfa7ccc072a245bcf86266e0e2868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 10
+  DashCD: 2
+  DashLength: 0.2
+  Health: 3
+  PerfectParryRad: 8
+  Score: 0
 --- !u!4 &1202969625
 Transform:
   m_ObjectHideFlags: 0
