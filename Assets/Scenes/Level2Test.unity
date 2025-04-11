@@ -202,7 +202,7 @@ GameObject:
   m_Component:
   - component: {fileID: 301832088}
   - component: {fileID: 301832089}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 498099170}
   - component: {fileID: 498099171}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall Collider (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -364,7 +364,7 @@ GameObject:
   m_Component:
   - component: {fileID: 584252792}
   - component: {fileID: 584252793}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -442,7 +442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 596068346}
   - component: {fileID: 596068347}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -552,8 +552,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 521793977}
   smoothSpeed: 5
-  minBounds: {x: -35.8, y: -14}
-  maxBounds: {x: 35.8, y: 14}
+  minBounds: {x: -30, y: -14}
+  maxBounds: {x: 30, y: 14}
 --- !u!81 &856870199
 AudioListener:
   m_ObjectHideFlags: 0
@@ -638,7 +638,7 @@ GameObject:
   m_Component:
   - component: {fileID: 872185873}
   - component: {fileID: 872185874}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall Collider (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -716,7 +716,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1175368265}
   - component: {fileID: 1175368266}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -935,7 +935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1545188557}
   - component: {fileID: 1545188558}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wall Collider (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

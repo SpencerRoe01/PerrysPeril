@@ -35,8 +35,10 @@ public class UpgradeClass : MonoBehaviour
 
         if (AllUpgradesUsed) 
         {
-            AllUpgradesUsed = false;
+            
+            UpgradesAvalable = 1;
             StartCoroutine(DelayedMethodCoroutine(2f));
+            
         }
         UpgradePoints.text = "Upgrades: " + UpgradesAvalable;
     }
@@ -46,7 +48,7 @@ public class UpgradeClass : MonoBehaviour
         
         yield return new WaitForSeconds(delay);
 
-        
+        Debug.Log("Loading");
         LevelManager.LoadNextScene();
     }
 

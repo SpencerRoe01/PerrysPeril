@@ -577,8 +577,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 521793977}
   smoothSpeed: 5
-  minBounds: {x: -33, y: -14}
-  maxBounds: {x: 33, y: 14}
+  minBounds: {x: -30, y: -14}
+  maxBounds: {x: 30, y: 14}
 --- !u!81 &856870199
 AudioListener:
   m_ObjectHideFlags: 0

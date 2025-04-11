@@ -34,6 +34,8 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        StartCoroutine(CheckIfEnemiesAreDead(2f));
     }
 
     void OnEnable()
@@ -70,8 +72,8 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-       
-        { 
+
+        {
 
         }
         if (EnemiesToSpawn.Count > 0 && EnemiesInScene.Count <= MaxEnemiesAllowedInScene && level != 1)
@@ -79,10 +81,7 @@ public class LevelManager : MonoBehaviour
             SpawnEnemy();
         }
 
-        if (!NewSceneLoading)
-        {
-            StartCoroutine(CheckIfEnemiesAreDead(2f));
-        }
+        
 
 
         if (isUpgradeLevel)
@@ -127,13 +126,18 @@ public class LevelManager : MonoBehaviour
 
     IEnumerator CheckIfEnemiesAreDead(float delay)
     {
-        yield return new WaitForSeconds(delay);
-
-        if (EnemiesInScene.Count == 0 && EnemiesToSpawn.Count == 0 && level != 0 && level != 1)
+        while (true)
         {
-            if (!NewSceneLoading)
+
+            yield return new WaitForSeconds(delay);
+            Debug.Log("check");
+
+            if (EnemiesInScene.Count == 0 && EnemiesToSpawn.Count == 0 && level != 0 && level != 1 && !NewSceneLoading)
             {
-                LoadNextScene();
+                if (!NewSceneLoading && SceneManager.GetActiveScene().name != "SettingsMenu" && SceneManager.GetActiveScene().name != "StartMenu")
+                {
+                    LoadNextScene();
+                }
             }
         }
     }
@@ -173,7 +177,14 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
-    public void LoadSettingScene(){
+    public void LoadSettingScene()
+    {
         SceneManager.LoadScene(1);
+    }
+    public void LoadLevel1()
+    {
+        SceneManager.LoadScene(3);
+        level = 3;
+        
     }
 }

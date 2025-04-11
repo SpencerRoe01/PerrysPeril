@@ -247,10 +247,10 @@ MonoBehaviour:
   rotationSpeed: 360
   slowdownDistance: 0.6
   pickNextWaypointDist: 2
-  endReachedDistance: 3.37
+  endReachedDistance: 1.97
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
-  whenCloseToDestination: 0
+  whenCloseToDestination: 1
   constrainInsideGraph: 0
 --- !u!114 &2400896339881242514
 MonoBehaviour:
@@ -307,11 +307,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 5405752648547703117, guid: a25c770410d93c64f9450122b91d7b08, type: 3}
   Player: {fileID: 0}
-  BulletMoveSpeed: 20
-  BurstCount: 1
-  TimeBetweenBursts: 0.1
-  RestTime: 1
-  ProjectilesPerBurst: 1
+  BulletMoveSpeed: 0
+  BurstCount: 0
+  TimeBetweenBursts: 5000000
+  RestTime: 0
+  ProjectilesPerBurst: 0
   AngleSpread: 0
   StartingDistance: 0.1
   Stagger: 0
