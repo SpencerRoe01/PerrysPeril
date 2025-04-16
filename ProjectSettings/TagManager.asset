@@ -7,6 +7,7 @@ TagManager:
   - Projectile
   - Enemy
   - Environemnt
+  - Environment
   layers:
   - Default
   - TransparentFX

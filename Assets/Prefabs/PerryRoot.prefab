@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 4363169833180651675}
   - component: {fileID: 3724523712968660690}
   - component: {fileID: 3594996742130481890}
+  - component: {fileID: 1395715754472676821}
   m_Layer: 0
   m_Name: PerryRoot
   m_TagString: Player
@@ -260,6 +261,21 @@ MonoBehaviour:
   PerfectParryStunCollider: {fileID: 8243029835149433293}
   SwordAnimator: {fileID: 6397040502255431247}
   colliderActiveTime: 0.5
+--- !u!114 &1395715754472676821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1433950520153140694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cabdff4bf503dfd41b91daa4e8859f82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownDuration: 2
+  stunGrenade: {fileID: 0}
+  shootForce: 10
 --- !u!1 &4798271087498975992
 GameObject:
   m_ObjectHideFlags: 0
