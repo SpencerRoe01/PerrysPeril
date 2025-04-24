@@ -274,8 +274,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownDuration: 2
-  stunGrenade: {fileID: 0}
-  shootForce: 10
+  stunGrenade: {fileID: 6253716429061384373, guid: f1796f98767c8f446bb123624bdbfa9d, type: 3}
+  shootForce: 20
 --- !u!1 &4798271087498975992
 GameObject:
   m_ObjectHideFlags: 0

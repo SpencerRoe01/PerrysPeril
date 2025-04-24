@@ -1653,6 +1653,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1395715754472676821, guid: 8cbfbd04e0af34849a708decdad27b60, type: 3}
+      propertyPath: stunGrenade
+      value: 
+      objectReference: {fileID: 6253716429061384373, guid: f1796f98767c8f446bb123624bdbfa9d, type: 3}
     - target: {fileID: 1433950520153140694, guid: 8cbfbd04e0af34849a708decdad27b60, type: 3}
       propertyPath: m_Name
       value: PerryRoot

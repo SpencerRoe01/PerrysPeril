@@ -86,10 +86,14 @@ public class EnemyRoot : MonoBehaviour
     {
         if (other.gameObject.tag == "Projectile" )
         {
-            if (other.gameObject.GetComponent<Projectile>().isEnemyProjectile == false)
+            if (other.gameObject.GetComponent<Projectile>() != null && other.gameObject.GetComponent<Projectile>().isEnemyProjectile == false)
             {
                 Health -= 1;
                 other.gameObject.GetComponent<Projectile>().DestoyProjectile();
+            }
+            else if (other.gameObject.GetComponent<Projectile>() == null)
+            {
+                Health -= 1;
             }
             
 
