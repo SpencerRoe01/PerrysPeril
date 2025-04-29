@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -93,16 +94,25 @@ public class Player : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.tag == "Projectile")
+
+        try
         {
-            if (other.gameObject.GetComponent<Projectile>().isEnemyProjectile == true
-                && !IsDashing
-                && !GetComponent<Parry>().PerfectParryStunCollider.enabled)
+            if (other.gameObject.tag == "Projectile")
             {
-                Health -= 1;
-                other.gameObject.GetComponent<Projectile>().DestoyProjectile();
+                var projectile = other.gameObject.GetComponent<Projectile>();
+
+                if (projectile != null && projectile.isEnemyProjectile == true && !IsDashing && !GetComponent<Parry>().PerfectParryStunCollider.enabled)
+                {
+                    Health -= 1;
+                    projectile.DestoyProjectile();
+                }
             }
         }
+        catch (NullReferenceException e)
+        {
+            Debug.Log(other);
+        }
+
         if (other.gameObject.tag == "Enemy")
         {
             if (other.gameObject.GetComponent<EnemyRoot>().IsStunned && IsDashing)

@@ -60,6 +60,7 @@ public class Parry : MonoBehaviour
         if (name == "PerfectParryCollider")
         {
             Debug.Log("Perfect!");
+            GameObject.Find("ComboManager").GetComponent<Combo>().RegisterParry();
             other.gameObject.GetComponent<Projectile>().isEnemyProjectile = false;
             PerfectParryStunCollider.enabled = true;
             StartCoroutine(DisableColliderAfterDelay(PerfectParryStunCollider, .5f));

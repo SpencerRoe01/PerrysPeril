@@ -47,6 +47,7 @@ public class EnemyRoot : MonoBehaviour
         if (Health <= 0) 
         {
             IsStunned = true;
+            GameObject.Find("ComboManager").GetComponent<Combo>().RegisterStun();
         }
 
         if (Health <= 0)
@@ -89,6 +90,7 @@ public class EnemyRoot : MonoBehaviour
             if (other.gameObject.GetComponent<Projectile>() != null && other.gameObject.GetComponent<Projectile>().isEnemyProjectile == false)
             {
                 Health -= 1;
+                
                 other.gameObject.GetComponent<Projectile>().DestoyProjectile();
             }
             else if (other.gameObject.GetComponent<Projectile>() == null)
@@ -121,6 +123,7 @@ public class EnemyRoot : MonoBehaviour
     {
         LevelManager.EnemiesInScene.Remove(transform.parent.gameObject);
         Destroy(gameObject.transform.parent.gameObject);
+        GameObject.Find("ComboManager").GetComponent<Combo>().RegisterKill();
     }
 
 
