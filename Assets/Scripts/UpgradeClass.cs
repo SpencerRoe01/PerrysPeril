@@ -17,6 +17,7 @@ public class UpgradeClass : MonoBehaviour
     public StatManager StatManager;
 
     public TextMeshProUGUI UpgradePoints;
+    public TextMeshProUGUI UpgradeValues;
 
     private void Start()
     {
@@ -30,66 +31,56 @@ public class UpgradeClass : MonoBehaviour
         { 
             AllUpgradesUsed = true;
         }
-
-
-
-        if (AllUpgradesUsed) 
-        {
-            
-            UpgradesAvalable = 1;
-            StartCoroutine(DelayedMethodCoroutine(2f));
-            
-        }
         UpgradePoints.text = "Upgrades: " + UpgradesAvalable;
+        UpgradeValues.text = "Speed: " + StatManager.Speed + "\n" +
+                             "Dash CD: " + StatManager.DashCD + "\n" +
+                             "Dash Length: " + StatManager.DashLength + "\n" +
+                             "Health: " + StatManager.Health + "\n" +
+                             "PP Radius: " + StatManager.PerfectParryRad;
     }
-
-    IEnumerator DelayedMethodCoroutine(float delay)
-    {
-        
-        yield return new WaitForSeconds(delay);
-
-        Debug.Log("Loading");
-        LevelManager.LoadNextScene();
-    }
-
     public void UpgradeSpeed()
     {
-        if (StatManager.speed < MaxSpeed) 
-        {
-            StatManager.speed++;
+        if(UpgradesAvalable>0){
+            if(StatManager.Speed<MaxSpeed) {
+                StatManager.Speed++;
+            }
+            UpgradesAvalable--;
         }
-        UpgradesAvalable--;
     }
     public void UpgradeDashCD()
     {
-        if (StatManager.DashCD < MaxDashCD)
-        {
-            StatManager.DashCD -= 0.3f;
-        }
+        if(UpgradesAvalable>0){
+            if (StatManager.DashCD < MaxDashCD){
+                StatManager.DashCD -= 0.3f;
+            }
         UpgradesAvalable--;
+        }
     }
     public void UpgradeDashLength()
     {
-        if (StatManager.DashLength < MaxDashLen) 
-        {
-            StatManager.DashCD -= 0.1f;
+        if(UpgradesAvalable>0){
+            if (StatManager.DashLength < MaxDashLen) {
+                StatManager.DashLength -= 0.1f;
+            }
+            UpgradesAvalable--;
         }
-        UpgradesAvalable--;
     }
     public void UpgradeHealth()
     {
-        if (StatManager.Health < 5) 
-        {
-            StatManager.Health++;
+        if(UpgradesAvalable>0){
+            if(StatManager.Health < 5) {
+                StatManager.Health++;
+            }
+            UpgradesAvalable--;
         }
-        UpgradesAvalable--;
     }
     public void UpgradePerfectParryRad()
     {
-        if (StatManager.PerfectParryRad < MaxPerfectParryLen)
-        {
-            StatManager.PerfectParryRad += 3;
-        }
+        if(UpgradesAvalable>0){
+            if(StatManager.PerfectParryRad < MaxPerfectParryLen){
+                StatManager.PerfectParryRad += 3;
+            }
         UpgradesAvalable--;
+        }
     }
 }
