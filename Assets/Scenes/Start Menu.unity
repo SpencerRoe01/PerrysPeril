@@ -569,9 +569,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: e0a9fce164190884b839ab60a875d513, type: 3}
+  m_Resource: {fileID: 8300000, guid: e0a9fce164190884b839ab60a875d513, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -817,7 +817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f7bfa7ccc072a245bcf86266e0e2868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  Speed: 0
   DashCD: 2
   DashLength: 0.2
   Health: 3
@@ -999,13 +999,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84a615745c13ea4408a808145af7f8e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboValue: 0
+  gradeLevels:
+  - D
+  - C
+  - B
+  - A
+  - S
   maxComboValue: 100
-  decayRatePerSecond: 5
-  onKillBonus: 10
-  onStunBonus: 5
-  onParryBonus: 2
+  decayRate: 5
+  decayDelay: 0.5
+  downgradeCooldown: 2
+  killValue: 22
+  stunValue: 12
+  parryValue: 17
   ComboText: {fileID: 1791437148}
+  ComboBar: {fileID: 0}
 --- !u!4 &1548041020
 Transform:
   m_ObjectHideFlags: 0
@@ -1155,12 +1163,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6a6daca3242714fa6fdfa3bde4004e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Music: []
-  SFX: []
   MusicSource: {fileID: 20233560}
   SFXSource: {fileID: 990284335}
   MSlider: {fileID: 0}
   SSlider: {fileID: 0}
+  ButtonClick: {fileID: 0}
 --- !u!4 &1702935301
 Transform:
   m_ObjectHideFlags: 0

@@ -4,14 +4,15 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour{
     private static SoundManager instance;
-    public Sound[] Music;
-    public Sound[] SFX;
     public AudioSource MusicSource;
     public AudioSource SFXSource;
     public static int MusicVolume = 100;
     public static int SFXVolume = 100;
     public Slider MSlider;
     public Slider SSlider;
+
+    //SFX Sounds
+    public AudioClip ButtonClick;
     void Awake(){
         DontDestroyOnLoad(this);
         if(instance==null){
@@ -39,5 +40,8 @@ public class SoundManager : MonoBehaviour{
     }
     public int GetSFXVolume(){
         return SFXVolume;
+    }
+    public void PlayButtonClick(){
+        SFXSource.Play();
     }
 }
