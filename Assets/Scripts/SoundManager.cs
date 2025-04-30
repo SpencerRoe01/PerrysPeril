@@ -4,15 +4,17 @@ using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour{
     private static SoundManager instance;
-    public AudioSource MusicSource;
-    public AudioSource SFXSource;
     public static int MusicVolume = 100;
     public static int SFXVolume = 100;
     public Slider MSlider;
     public Slider SSlider;
+    
+    //Music Sounds
+    public AudioSource MusicSource;
 
     //SFX Sounds
-    public AudioClip ButtonClick;
+    public AudioSource ButtonClick;
+    
     void Awake(){
         DontDestroyOnLoad(this);
         if(instance==null){
@@ -32,8 +34,12 @@ public class SoundManager : MonoBehaviour{
         MusicVolume = (int) MSlider.value;
         SSlider = GameObject.Find("SFXSlider").GetComponent<Slider>();
         SFXVolume = (int) SSlider.value;
+
+        //Music Volumes
         MusicSource.volume = MusicVolume/100f;
-        SFXSource.volume = SFXVolume/100f;
+        
+        //SFX Volumes
+        ButtonClick.volume = SFXVolume/100f;
     }
     public int GetMusicVolume(){
         return MusicVolume;
@@ -41,7 +47,10 @@ public class SoundManager : MonoBehaviour{
     public int GetSFXVolume(){
         return SFXVolume;
     }
+    //Play Music Methods
+
+    //Play SFX Methods
     public void PlayButtonClick(){
-        SFXSource.Play();
+        ButtonClick.Play();
     }
 }
