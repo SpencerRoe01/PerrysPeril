@@ -36,6 +36,9 @@ public class Combo : MonoBehaviour
 
     void Update()
     {
+        
+
+
         timeSinceAdd += Time.deltaTime;
 
         if (timeSinceAdd >= decayDelay && comboValue > 0f)
@@ -67,7 +70,8 @@ public class Combo : MonoBehaviour
 
         ComboBar.fillAmount = comboValue / maxComboValue;
         ComboText.text = "Combo: " + gradeLevels[currentGradeIndex];
-        ComboText.gameObject.SetActive(true);
+        ComboText.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3);
+        ComboBar.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3);
     }
 
     public void RegisterKill() => AddCombo(killValue);

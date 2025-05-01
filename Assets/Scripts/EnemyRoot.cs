@@ -31,6 +31,16 @@ public class EnemyRoot : MonoBehaviour
     private void Update()
     {
 
+        Transform parent = transform.parent;
+        Vector3 parentScale = parent.localScale;
+        float xScale = Mathf.Abs(parentScale.x);
+
+        if (GameObject.FindGameObjectWithTag("Player").transform.position.x > transform.position.x)
+            parent.localScale = new Vector3(xScale, parentScale.y, parentScale.z);
+        else
+            parent.localScale = new Vector3(-xScale, parentScale.y, parentScale.z);
+
+
         if (AiPath.reachedDestination) { Animator.SetBool("moving", false); }
         else {Animator.SetBool("moving", true); }
 
