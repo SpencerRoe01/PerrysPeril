@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Combo : MonoBehaviour
 {
+    private static Combo instance;
+    
     [SerializeField] private string[] gradeLevels = { "D", "C", "B", "A", "S" };
     [SerializeField] private float maxComboValue = 100f;
     [SerializeField] private float decayRate = 5f;
@@ -23,7 +25,15 @@ public class Combo : MonoBehaviour
     private float downgradeTimer = 0f;
     private float timeSinceAdd = Mathf.Infinity;
 
-    void Awake() => DontDestroyOnLoad(gameObject);
+    void Awake(){
+        DontDestroyOnLoad(this);
+        if (instance == null){
+            instance = this;
+        }
+        else{
+            Destroy(gameObject);
+        }
+    }
 
     void Update()
     {
@@ -56,7 +66,7 @@ public class Combo : MonoBehaviour
             downgradeTimer = downgradeCooldown;
         }
 
-        ComboBar.fillAmount = comboValue / maxComboValue;
+        //ComboBar.fillAmount = comboValue / maxComboValue;
         ComboText.text = "Combo: " + gradeLevels[currentGradeIndex];
         ComboText.gameObject.SetActive(true);
     }
