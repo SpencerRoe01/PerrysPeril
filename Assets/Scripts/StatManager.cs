@@ -6,7 +6,7 @@ public class StatManager : MonoBehaviour{
     private static StatManager instance;
 
 
-    public int Speed;
+    public int speed;
     public float DashCD;
     public float DashLength;
     public int Health;
