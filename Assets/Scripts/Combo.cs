@@ -4,7 +4,9 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Combo : MonoBehaviour
-{
+{ 
+   
+    
 
     [SerializeField] private string[] gradeLevels = { "D", "C", "B", "A", "S" };
     [SerializeField] private float maxComboValue = 100f;
@@ -25,9 +27,11 @@ public class Combo : MonoBehaviour
     private float timeSinceAdd = Mathf.Infinity;
 
 
+
     void Awake(){
         DontDestroyOnLoad(this);
     }
+
 
 
     void Update()
