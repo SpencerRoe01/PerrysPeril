@@ -6,11 +6,17 @@ public class StatManager : MonoBehaviour{
     private static StatManager instance;
 
 
-    public int speed;
+    public int Speed;
     public float DashCD;
     public float DashLength;
     public int Health;
     public int PerfectParryRad;
+
+    public int SUpgradeLevel;
+    public int DCDUpgradeLevel;
+    public int DLUpgradeLevel;
+    public int HUpgradeLevel;
+    public int PPRUpgradeLevel;
 
 
     public int Score;
@@ -41,8 +47,7 @@ public class StatManager : MonoBehaviour{
     {
         Player = GameObject.Find("Player");
 
-        if (SceneManager.GetActiveScene().name == "UpgradeScene")
-        {
+        if (SceneManager.GetActiveScene().name == "UpgradeScene"){
             GameObject.Find("UpgradeManager").GetComponent<UpgradeClass>().UpgradesAvalable = 4;
         }
 

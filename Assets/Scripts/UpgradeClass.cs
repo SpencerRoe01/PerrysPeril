@@ -17,6 +17,7 @@ public class UpgradeClass : MonoBehaviour
     public StatManager StatManager;
 
     public TextMeshProUGUI UpgradePoints;
+    public TextMeshProUGUI UpgradeValues;
 
     private void Start()
     {
@@ -26,21 +27,21 @@ public class UpgradeClass : MonoBehaviour
     private void Update()
     {
 
-        if (UpgradesAvalable == 0) 
-        { 
+        if (UpgradesAvalable == 0){ 
             AllUpgradesUsed = true;
         }
-
-
-
-        if (AllUpgradesUsed) 
-        {
+        if (AllUpgradesUsed){
             
             UpgradesAvalable = 1;
             StartCoroutine(DelayedMethodCoroutine(2f));
             
         }
         UpgradePoints.text = "Upgrades: " + UpgradesAvalable;
+        UpgradeValues.text = "Speed: " + StatManager.SUpgradeLevel + "\n" +
+                             "Dash CD: " + StatManager.DCDUpgradeLevel + "\n" +
+                             "Dash Length: " + StatManager.DLUpgradeLevel + "\n" +
+                             "Health: " + StatManager.HUpgradeLevel + "\n" +
+                             "PP Radius: " + StatManager.PPRUpgradeLevel;
     }
 
     IEnumerator DelayedMethodCoroutine(float delay)
@@ -54,9 +55,10 @@ public class UpgradeClass : MonoBehaviour
 
     public void UpgradeSpeed()
     {
-        if (StatManager.speed < MaxSpeed) 
+        if (StatManager.Speed < MaxSpeed) 
         {
-            StatManager.speed++;
+            StatManager.Speed++;
+            StatManager.SUpgradeLevel++;
         }
         UpgradesAvalable--;
     }
@@ -65,6 +67,7 @@ public class UpgradeClass : MonoBehaviour
         if (StatManager.DashCD < MaxDashCD)
         {
             StatManager.DashCD -= 0.3f;
+            StatManager.DCDUpgradeLevel++;
         }
         UpgradesAvalable--;
     }
@@ -72,7 +75,8 @@ public class UpgradeClass : MonoBehaviour
     {
         if (StatManager.DashLength < MaxDashLen) 
         {
-            StatManager.DashCD -= 0.1f;
+            StatManager.DashLength -= 0.1f;
+            StatManager.DLUpgradeLevel++;
         }
         UpgradesAvalable--;
     }
@@ -81,6 +85,7 @@ public class UpgradeClass : MonoBehaviour
         if (StatManager.Health < 5) 
         {
             StatManager.Health++;
+            StatManager.HUpgradeLevel++;
         }
         UpgradesAvalable--;
     }
@@ -89,6 +94,7 @@ public class UpgradeClass : MonoBehaviour
         if (StatManager.PerfectParryRad < MaxPerfectParryLen)
         {
             StatManager.PerfectParryRad += 3;
+            StatManager.PPRUpgradeLevel++;
         }
         UpgradesAvalable--;
     }
