@@ -141,6 +141,7 @@ MonoBehaviour:
   Animator: {fileID: 2148238534233818055}
   LevelManager: {fileID: 0}
   AiPath: {fileID: 3229158300962691910}
+  IsArmored: 1
 --- !u!212 &1125612878260210538
 SpriteRenderer:
   m_ObjectHideFlags: 0
