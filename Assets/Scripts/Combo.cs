@@ -71,7 +71,7 @@ public class Combo : MonoBehaviour
         ComboBar.fillAmount = comboValue / maxComboValue;
         ComboText.text = "Combo: " + gradeLevels[currentGradeIndex];
         ComboText.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3);
-        ComboBar.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3);
+        ComboBar.gameObject.transform.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3);
     }
 
     public void RegisterKill() => AddCombo(killValue);

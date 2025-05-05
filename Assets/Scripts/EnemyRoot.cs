@@ -1,6 +1,7 @@
 using Pathfinding;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class EnemyRoot : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class EnemyRoot : MonoBehaviour
 
     public AIPath AiPath;
 
-
+    public bool IsArmored;
 
 
     private void Start()
@@ -30,6 +31,10 @@ public class EnemyRoot : MonoBehaviour
 
     private void Update()
     {
+        if (IsArmored) 
+        {
+            gameObject.transform.GetChild(0).gameObject.SetActive(Health > 1);
+        }
 
         Transform parent = transform.parent;
         Vector3 parentScale = parent.localScale;
