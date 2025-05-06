@@ -29,12 +29,7 @@ public class UpgradeClass : MonoBehaviour
 
         if (UpgradesAvalable == 0){ 
             AllUpgradesUsed = true;
-        }
-        if (AllUpgradesUsed){
-            
-            UpgradesAvalable = 1;
-            StartCoroutine(DelayedMethodCoroutine(2f));
-            
+            LevelManager.LoadNextScene();
         }
         UpgradePoints.text = "Upgrades: " + UpgradesAvalable;
         UpgradeValues.text = "Speed: " + StatManager.SUpgradeLevel + "\n" +
@@ -44,58 +39,49 @@ public class UpgradeClass : MonoBehaviour
                              "PP Radius: " + StatManager.PPRUpgradeLevel;
     }
 
-    IEnumerator DelayedMethodCoroutine(float delay)
-    {
-        
-        yield return new WaitForSeconds(delay);
-
-        Debug.Log("Loading");
-        LevelManager.LoadNextScene();
-    }
-
     public void UpgradeSpeed()
     {
-        if (StatManager.Speed < MaxSpeed) 
+        if (StatManager.Speed < MaxSpeed && !AllUpgradesUsed) 
         {
             StatManager.Speed++;
             StatManager.SUpgradeLevel++;
+            UpgradesAvalable--;
         }
-        UpgradesAvalable--;
     }
     public void UpgradeDashCD()
     {
-        if (StatManager.DashCD < MaxDashCD)
+        if (StatManager.DashCD < MaxDashCD && !AllUpgradesUsed)
         {
             StatManager.DashCD -= 0.3f;
             StatManager.DCDUpgradeLevel++;
+            UpgradesAvalable--;
         }
-        UpgradesAvalable--;
     }
     public void UpgradeDashLength()
     {
-        if (StatManager.DashLength < MaxDashLen) 
+        if (StatManager.DashLength < MaxDashLen && !AllUpgradesUsed) 
         {
             StatManager.DashLength -= 0.1f;
             StatManager.DLUpgradeLevel++;
+            UpgradesAvalable--;
         }
-        UpgradesAvalable--;
     }
     public void UpgradeHealth()
     {
-        if (StatManager.Health < 5) 
+        if (StatManager.Health < 5 && !AllUpgradesUsed) 
         {
             StatManager.Health++;
             StatManager.HUpgradeLevel++;
+            UpgradesAvalable--;
         }
-        UpgradesAvalable--;
     }
     public void UpgradePerfectParryRad()
     {
-        if (StatManager.PerfectParryRad < MaxPerfectParryLen)
+        if (StatManager.PerfectParryRad < MaxPerfectParryLen && !AllUpgradesUsed)
         {
             StatManager.PerfectParryRad += 3;
             StatManager.PPRUpgradeLevel++;
+            UpgradesAvalable--;
         }
-        UpgradesAvalable--;
     }
 }
