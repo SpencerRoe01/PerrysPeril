@@ -426,7 +426,7 @@ MonoBehaviour:
   MaxSpeed: 4
   MaxDashCD: 4
   MaxDashLen: 4
-  MaxPerfectParryLen: 4
+  MaxPerfectParryLen: 12
   StatManager: {fileID: 0}
   UpgradePoints: {fileID: 1025894041}
   UpgradeValues: {fileID: 1534429974}

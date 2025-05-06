@@ -79,7 +79,7 @@ public class UpgradeClass : MonoBehaviour
     {
         if (StatManager.PerfectParryRad < MaxPerfectParryLen && !AllUpgradesUsed)
         {
-            StatManager.PerfectParryRad += 3;
+            StatManager.PerfectParryRad += 1;
             StatManager.PPRUpgradeLevel++;
             UpgradesAvalable--;
         }
