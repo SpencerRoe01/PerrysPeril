@@ -130,7 +130,7 @@ public class LevelManager : MonoBehaviour
         {
 
             yield return new WaitForSeconds(delay);
-            Debug.Log("check");
+            
 
             if (EnemiesInScene.Count == 0 && EnemiesToSpawn.Count == 0 && level != 0 && level != 1 && !NewSceneLoading)
             {
