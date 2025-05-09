@@ -9,6 +9,7 @@ public class StunGrenadeProjectile : MonoBehaviour
     private CircleCollider2D circleCollider;
     private bool hasTriggered = false;
 
+    public GameObject SoundManager;
     private void Start()
     {
         circleCollider = GetComponent<CircleCollider2D>();
@@ -35,9 +36,10 @@ public class StunGrenadeProjectile : MonoBehaviour
         
         if (particlePrefab != null)
         {
+            SoundManager = GameObject.Find("SoundManager");
+            SoundManager.GetComponent<SoundManager>().PlayBombExplosion();
             GameObject particleInstance = Instantiate(particlePrefab, transform.position, Quaternion.identity);
 
-            
             Destroy(particleInstance, particleDestroyDelay);
         }
 

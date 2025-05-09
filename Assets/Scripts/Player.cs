@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
     private bool KilledAnEnemyOnDash;
     private Vector2 dashDirection;
 
+    public GameObject SoundManager;
+
     void Start()
     {
         ActiveMoveSpeed = PlayerMoveSpeed;
@@ -42,6 +44,8 @@ public class Player : MonoBehaviour
         {
             if (DashCoolCounter <= 0 && DashCounter <= 0)
             {
+                SoundManager = GameObject.Find("SoundManager");
+                SoundManager.GetComponent<SoundManager>().PlayDashWoosh();
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 dashDirection = ((Vector2)mousePos - (Vector2)transform.position).normalized;
                 ActiveMoveSpeed = DashSpeed;
