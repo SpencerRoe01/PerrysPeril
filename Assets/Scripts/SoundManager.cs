@@ -14,6 +14,9 @@ public class SoundManager : MonoBehaviour{
 
     //SFX Sounds
     public AudioSource ButtonClick;
+    public AudioSource SwordSlash;
+    public AudioSource BombExplosion;
+    public AudioSource DashWoosh;
     
     void Awake(){
         DontDestroyOnLoad(this);
@@ -40,6 +43,9 @@ public class SoundManager : MonoBehaviour{
         
         //SFX Volumes
         ButtonClick.volume = SFXVolume/100f;
+        SwordSlash.volume = SFXVolume/100f;
+        BombExplosion.volume = SFXVolume/100f;
+        DashWoosh.volume = SFXVolume/100f;
     }
     public int GetMusicVolume(){
         return MusicVolume;
@@ -52,5 +58,14 @@ public class SoundManager : MonoBehaviour{
     //Play SFX Methods
     public void PlayButtonClick(){
         ButtonClick.Play();
+    }
+    public void PlaySwordSlash(){
+        SwordSlash.Play();
+    }
+    public void PlayBombExplosion(){
+        BombExplosion.Play();
+    }
+    public void PlayDashWoosh(){
+        DashWoosh.Play();
     }
 }
