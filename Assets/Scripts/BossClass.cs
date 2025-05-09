@@ -10,7 +10,7 @@ public class BossClass : MonoBehaviour
     bool isShooting;
 
     public GameObject Projectile1;
-
+    public Animator BossAnimation;
     void Start()
     {
         StartCoroutine(Boss());
@@ -26,18 +26,33 @@ public class BossClass : MonoBehaviour
 
             if (!isShooting) 
             {
-                StartCoroutine(ShootRoutine(75, 10, false, 2, 3, false, Projectile1, 10, 5));
+                StartCoroutine(ShootRoutine(75, 10, false, 1.5f, 5, false, Projectile1, 20, .5f));
                 Debug.Log("Shoot");
             }
             while (isShooting) 
             { 
                 yield return new WaitForSeconds(.5f);
             }
+            yield return new WaitForSeconds(.5f);
 
-           
+            if (!isShooting)
+            {
+                StartCoroutine(ShootRoutine(359, 35, true, .5f, 2, true, Projectile1, 15, .2f));
+                Debug.Log("Shoot2"); 
+            }
+            while (isShooting)
+            {
+                yield return new WaitForSeconds(.5f);
+            }
+
+        }
+        while ((MaxHealth / Health) > 0.7f)
+        {
+
+
         }
 
-       
+
         yield break;
     }
 
@@ -144,4 +159,13 @@ public class BossClass : MonoBehaviour
         return Position;
     }
 
+    public void BossSlam() 
+    
+    {
+
+        StartCoroutine(ShootRoutine(359, 35, false, 0, 1, true, Projectile1, 15, .2f));
+
+    }
+
+    
 }
