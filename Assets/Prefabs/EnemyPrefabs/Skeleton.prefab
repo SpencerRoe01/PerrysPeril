@@ -16,7 +16,8 @@ GameObject:
   - component: {fileID: 5952738276622537605}
   - component: {fileID: 218455668725527819}
   - component: {fileID: 4998282456989576572}
-  m_Layer: 0
+  - component: {fileID: 4577173070288417627}
+  m_Layer: 3
   m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BulletPrefab: {fileID: 5405752648547703117, guid: c48dbb07e77e33f428265b17ebae8203, type: 3}
-  Player: {fileID: 0}
+  Player: {fileID: 4666771089333739229, guid: 0e8b0cad60271bf4fb257a4e5faa5719, type: 3}
   BulletMoveSpeed: 10
   BurstCount: 2
   TimeBetweenBursts: 1
@@ -224,6 +225,7 @@ MonoBehaviour:
   Stagger: 0
   Oscillate: 0
   AiPath: {fileID: 7792071585488217909}
+  EnemyRoot: {fileID: 8891539120744377738}
 --- !u!50 &4998282456989576572
 Rigidbody2D:
   serializedVersion: 5
@@ -250,7 +252,43 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!58 &4577173070288417627
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 809202600740939711}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 55
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 1.41
 --- !u!1 &6649530697724047390
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,7 +301,7 @@ GameObject:
   - component: {fileID: 8891539120744377738}
   - component: {fileID: 1393654980868149308}
   - component: {fileID: 7571281121509171653}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SkeletonRoot
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -302,7 +340,9 @@ MonoBehaviour:
   IsStunned: 0
   StunDuration: 4
   IsRoamingEnemy: 0
-  Animator: {fileID: 0}
+  Animator: {fileID: 5952738276622537605}
+  LevelManager: {fileID: 0}
+  AiPath: {fileID: 7792071585488217909}
 --- !u!212 &1393654980868149308
 SpriteRenderer:
   m_ObjectHideFlags: 0

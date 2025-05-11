@@ -1,6 +1,7 @@
 using Pathfinding;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class EnemyRoot : MonoBehaviour
 {
@@ -12,21 +13,56 @@ public class EnemyRoot : MonoBehaviour
 
     public Animator Animator;
 
-    
+    private Coroutine stunCoroutine;
+    public LevelManager LevelManager;
+
+    public AIPath AiPath;
+
+    public bool IsArmored;
+
 
     private void Start()
     {
         transform.parent.gameObject.GetComponent<AIPath>().maxSpeed = MoveSpeed;
+        transform.parent.GetComponent<Shooter>().Player = GameObject.FindGameObjectWithTag("Player");
+
     }
+    
 
     private void Update()
     {
-       
+        if (IsArmored) 
+        {
+            gameObject.transform.GetChild(0).gameObject.SetActive(Health > 1);
+        }
 
+        Transform parent = transform.parent;
+        Vector3 parentScale = parent.localScale;
+        float xScale = Mathf.Abs(parentScale.x);
+
+        if (GameObject.FindGameObjectWithTag("Player").transform.position.x > transform.position.x)
+            parent.localScale = new Vector3(xScale, parentScale.y, parentScale.z);
+        else
+            parent.localScale = new Vector3(-xScale, parentScale.y, parentScale.z);
+
+
+        if (AiPath.reachedDestination) { Animator.SetBool("moving", false); }
+        else {Animator.SetBool("moving", true); }
+
+
+            LevelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        if (transform.parent.Find("ExplodeRad") != null) 
+        {
+            if (transform.parent.Find("ExplodeRad").GetComponent<ExplodingEnemyScript>().Exploding) 
+            {
+                Health = 1;
+            }
+        }
 
         if (Health <= 0) 
         {
             IsStunned = true;
+            GameObject.Find("ComboManager").GetComponent<Combo>().RegisterStun();
         }
 
         if (Health <= 0)
@@ -44,7 +80,10 @@ public class EnemyRoot : MonoBehaviour
             transform.parent.GetComponent<SpriteRenderer>().enabled = false;
 
 
-            StartCoroutine(StunCoroutine(StunDuration));
+            if (stunCoroutine == null)
+            {
+                 stunCoroutine = StartCoroutine(StunCoroutine(StunDuration));
+            }
             Health = 1;
 
 
@@ -56,17 +95,22 @@ public class EnemyRoot : MonoBehaviour
     }
     public void PlayShootAnimation()
     {
-        //play Shoot animation
+        Animator.SetTrigger("shoot");
     }
     
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Projectile" )
         {
-            if (other.gameObject.GetComponent<Projectile>().isEnemyProjectile == false)
+            if (other.gameObject.GetComponent<Projectile>() != null && other.gameObject.GetComponent<Projectile>().isEnemyProjectile == false)
             {
                 Health -= 1;
+                
                 other.gameObject.GetComponent<Projectile>().DestoyProjectile();
+            }
+            else if (other.gameObject.GetComponent<Projectile>() == null)
+            {
+                Health -= 1;
             }
             
 
@@ -87,11 +131,14 @@ public class EnemyRoot : MonoBehaviour
 
         }
         transform.parent.GetComponent<SpriteRenderer>().enabled = true;
+
+        stunCoroutine = null;
     }
     public void DestroyEnemy() 
     {
-
+        LevelManager.EnemiesInScene.Remove(transform.parent.gameObject);
         Destroy(gameObject.transform.parent.gameObject);
+        GameObject.Find("ComboManager").GetComponent<Combo>().RegisterKill();
     }
 
 

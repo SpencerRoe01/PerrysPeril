@@ -12,6 +12,7 @@ public class Parry : MonoBehaviour
 
     public Animator SwordAnimator;
     public float colliderActiveTime = 0.5f;
+    public GameObject SoundManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,6 +30,8 @@ public class Parry : MonoBehaviour
         {
             SwordAnimator.SetTrigger("WideSwing");
             WideParryCollider.enabled = true;
+            SoundManager = GameObject.Find("SoundManager");
+            SoundManager.GetComponent<SoundManager>().PlaySwordSlash();
             StartCoroutine(DisableColliderAfterDelay(WideParryCollider, colliderActiveTime));
 
         }
@@ -37,8 +40,8 @@ public class Parry : MonoBehaviour
             SwordAnimator.SetTrigger("Parry");
             PerfectParryCollider.enabled = true;
             ParryCollider.enabled = true;
-
-
+            SoundManager = GameObject.Find("SoundManager");
+            SoundManager.GetComponent<SoundManager>().PlaySwordSlash();
             StartCoroutine(DisableColliderAfterDelay(ParryCollider, colliderActiveTime));
             StartCoroutine(DisableColliderAfterDelay(PerfectParryCollider, colliderActiveTime));
         }
@@ -60,6 +63,7 @@ public class Parry : MonoBehaviour
         if (name == "PerfectParryCollider")
         {
             Debug.Log("Perfect!");
+            GameObject.Find("ComboManager").GetComponent<Combo>().RegisterParry();
             other.gameObject.GetComponent<Projectile>().isEnemyProjectile = false;
             PerfectParryStunCollider.enabled = true;
             StartCoroutine(DisableColliderAfterDelay(PerfectParryStunCollider, .5f));

@@ -48,4 +48,15 @@ public class Projectile : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        
+        if (other.gameObject.tag == "Environment")
+        {
+            DestoyProjectile();
+        }
+
+    }
 }

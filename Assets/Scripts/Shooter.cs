@@ -22,6 +22,7 @@ public class Shooter : MonoBehaviour
 
 
     public AIPath AiPath;
+    public EnemyRoot EnemyRoot;
 
 
 
@@ -80,7 +81,7 @@ public class Shooter : MonoBehaviour
                 AngleStep *= -1;
             }
 
-
+            
             for (int j = 0; j < ProjectilesPerBurst; j++)
             {
 
@@ -107,6 +108,7 @@ public class Shooter : MonoBehaviour
 
             CurrentAngle = StartAngle;
             yield return new WaitForSeconds(TimeBetweenBursts);
+            EnemyRoot.PlayShootAnimation();
 
 
         }
