@@ -698,7 +698,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 82678091630505806, guid: 2c2383dcdf7943940ac763c05b8b3315, type: 3}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadLevel1
+        m_MethodName: LoadIntroCutscene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

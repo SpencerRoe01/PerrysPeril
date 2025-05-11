@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -186,5 +187,9 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(3);
         level = 3;
         
+    }
+    public void LoadIntroCutscene()
+    {
+        SceneManager.LoadScene(6);
     }
 }
