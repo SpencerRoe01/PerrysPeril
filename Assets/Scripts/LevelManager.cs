@@ -21,6 +21,8 @@ public class LevelManager : MonoBehaviour
 
     private static LevelManager instance;
 
+    public GameObject SoundManager;
+
     public bool NewSceneLoading;
     public bool isUpgradeLevel;
 
@@ -184,6 +186,8 @@ public class LevelManager : MonoBehaviour
     }
     public void LoadLevel1()
     {
+        SoundManager = GameObject.Find("SoundManager");
+        SoundManager.GetComponent<SoundManager>().PlayBattleTheme();
         SceneManager.LoadScene(3);
         level = 3;
         

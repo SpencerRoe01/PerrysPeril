@@ -10,13 +10,17 @@ public class SoundManager : MonoBehaviour{
     public Slider SSlider;
     
     //Music Sounds
-    public AudioSource MusicSource;
+    public AudioSource StartTheme;
+    public AudioSource BattleTheme;
+    public AudioSource BossTheme;
 
     //SFX Sounds
     public AudioSource ButtonClick;
     public AudioSource SwordSlash;
     public AudioSource BombExplosion;
     public AudioSource DashWoosh;
+    public AudioSource ProjectileThrow;
+    public AudioSource BombFuse;
     
     void Awake(){
         DontDestroyOnLoad(this);
@@ -39,13 +43,17 @@ public class SoundManager : MonoBehaviour{
         SFXVolume = (int) SSlider.value;
 
         //Music Volumes
-        MusicSource.volume = MusicVolume/100f;
-        
+        StartTheme.volume = MusicVolume/100f;
+        BattleTheme.volume = MusicVolume/100f;
+        BossTheme.volume = MusicVolume/100f;
+
         //SFX Volumes
         ButtonClick.volume = SFXVolume/100f;
         SwordSlash.volume = SFXVolume/100f;
         BombExplosion.volume = SFXVolume/100f;
         DashWoosh.volume = SFXVolume/100f;
+        ProjectileThrow.volume = SFXVolume/100f;
+        BombFuse.volume = SFXVolume/100f;
     }
     public int GetMusicVolume(){
         return MusicVolume;
@@ -54,6 +62,14 @@ public class SoundManager : MonoBehaviour{
         return SFXVolume;
     }
     //Play Music Methods
+    public void PlayBattleTheme(){
+        StartTheme.Stop();
+        BattleTheme.Play();
+    }
+    public void PlayBossTheme(){
+        BattleTheme.Stop();
+        BossTheme.Play();
+    }
 
     //Play SFX Methods
     public void PlayButtonClick(){
@@ -67,5 +83,14 @@ public class SoundManager : MonoBehaviour{
     }
     public void PlayDashWoosh(){
         DashWoosh.Play();
+    }
+    public void PlayProjectileThrow(){
+        ProjectileThrow.Play();
+    }
+    public void StopProjectileThrow(){
+        ProjectileThrow.Stop();
+    }
+    public void PlayBombFuse(){
+        BombFuse.Play();
     }
 }
