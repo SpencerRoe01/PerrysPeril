@@ -193,7 +193,7 @@ MonoBehaviour:
   InvincibilityDuration: 1
   health: 0
   Player: {fileID: 0}
-  Projectile1: {fileID: 5405752648547703117, guid: a25c770410d93c64f9450122b91d7b08, type: 3}
+  Projectile1: {fileID: 5405752648547703117, guid: 0da9e19be4cba0f4794f37aa2dd246c9, type: 3}
   rb: {fileID: 5744522519446950013}
   dashSpeed: 50
   dashDuration: 0.2
