@@ -115,14 +115,12 @@ public class EnemyRoot : MonoBehaviour
 
             if (isPlayerProj && invincibilityCounter <= 0f)
             {
-                // Take damage and start i-frames
                 Health -= 1;
                 invincibilityCounter = 1f;
 
                 if (proj != null)
                     proj.DestoyProjectile();
 
-                // If killed outright
                 
             }
         }

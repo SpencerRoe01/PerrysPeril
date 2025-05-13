@@ -8,7 +8,7 @@ public class BossClass : MonoBehaviour
     public float MaxHealth = 10f;
     [Tooltip("Seconds of invincibility after taking damage")] public float InvincibilityDuration = 1f;
 
-    private float health;
+    public float health;
     private float invincibilityCounter = 0f;
 
     [Header("References")]
@@ -26,6 +26,8 @@ public class BossClass : MonoBehaviour
 
     private bool isShooting = false;
 
+    public GameObject StunnedBoss;
+
     void Awake()
     {
         health = MaxHealth;
@@ -34,6 +36,14 @@ public class BossClass : MonoBehaviour
 
     void Update()
     {
+        Player = GameObject.Find("PerryRoot").gameObject;
+        if (health <= 0) 
+        {
+            Instantiate(StunnedBoss, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+
+
         // Countdown invincibility timer
         if (invincibilityCounter > 0f)
             invincibilityCounter -= Time.deltaTime;
@@ -78,10 +88,111 @@ public class BossClass : MonoBehaviour
         int BurstCount, bool Oscillate, GameObject BulletPrefab, float BulletMoveSpeed, float RestTime)
     {
         isShooting = true;
-        // ... (existing shooting logic) ...
+        isShooting = true;
+
+        float StartAngle, CurrentAngle, AngleStep, EndAngle;
+        float TimeBetweenProjectiles = 0;
+
+
+        TargetConeOfInfluence(out StartAngle, out CurrentAngle, out AngleStep, out EndAngle, AngleSpread, ProjectilesPerBurst);
+        if (Stagger)
+        {
+            TimeBetweenProjectiles = TimeBetweenBursts / ProjectilesPerBurst;
+        }
+
+        for (int i = 0; i < BurstCount; i++)
+        {
+            /*if (transform.GetChild(0).GetComponent<EnemyRoot>().IsStunned)
+            {
+                break;
+            }
+            */
+            if (!Oscillate)
+            {
+                TargetConeOfInfluence(out StartAngle, out CurrentAngle, out AngleStep, out EndAngle, AngleSpread, ProjectilesPerBurst);
+            }
+            if (Oscillate && i % 2 != 1)
+            {
+                TargetConeOfInfluence(out StartAngle, out CurrentAngle, out AngleStep, out EndAngle, AngleSpread, ProjectilesPerBurst);
+            }
+            else if (Oscillate)
+            {
+                CurrentAngle = EndAngle;
+                EndAngle = StartAngle;
+                StartAngle = CurrentAngle;
+                AngleStep *= -1;
+            }
+
+
+            for (int j = 0; j < ProjectilesPerBurst; j++)
+            {
+
+
+                Vector2 Position = FindBulletSpawnPosition(CurrentAngle);
+
+                GameObject NewBullet = Instantiate(BulletPrefab, Position, Quaternion.identity);
+                NewBullet.GetComponent<Projectile>().EnemyWhoShotProjectile = gameObject;
+
+                NewBullet.transform.right = NewBullet.transform.position - transform.position;
+
+                if (NewBullet.TryGetComponent(out Projectile projectile))
+                {
+                    projectile.UpdateMoveSpeed(BulletMoveSpeed);
+                }
+
+                CurrentAngle += AngleStep;
+
+                if (Stagger)
+                {
+                    yield return new WaitForSeconds(TimeBetweenProjectiles);
+                }
+            }
+
+            CurrentAngle = StartAngle;
+            yield return new WaitForSeconds(TimeBetweenBursts);
+
+
+
+        }
+
         yield return new WaitForSeconds(RestTime);
         isShooting = false;
+
+        
     }
+
+    private void TargetConeOfInfluence(out float StartAngle, out float CurrentAngle, out float AngleStep, out float EndAngle, float AngleSpread, int ProjectilesPerBurst)
+    {
+        Vector2 TargetDirection = Player.transform.position - transform.position;
+        float TargetAngle = Mathf.Atan2(TargetDirection.y, TargetDirection.x) * Mathf.Rad2Deg;
+        StartAngle = TargetAngle;
+        EndAngle = TargetAngle;
+        CurrentAngle = TargetAngle;
+        float HalfAngleSpread = 0f;
+        AngleStep = 0f;
+
+        if (AngleSpread != 0)
+        {
+            AngleStep = AngleSpread / (ProjectilesPerBurst - 1);
+            HalfAngleSpread = AngleSpread / 2f;
+            StartAngle = TargetAngle - HalfAngleSpread;
+            EndAngle = TargetAngle + HalfAngleSpread;
+            CurrentAngle = StartAngle;
+        }
+    }
+
+
+    private Vector2 FindBulletSpawnPosition(float CurrentAngle)
+    {
+        float x = transform.position.x + 1 * Mathf.Cos(CurrentAngle * Mathf.Deg2Rad);
+        float y = transform.position.y + 1 * Mathf.Sin(CurrentAngle * Mathf.Deg2Rad);
+
+        Vector2 Position = new Vector2(x, y);
+        return Position;
+    }
+
+    
+
 
     IEnumerator DashRoutine()
     {
@@ -130,15 +241,10 @@ public class BossClass : MonoBehaviour
         health -= amount;
         invincibilityCounter = InvincibilityDuration;
         // TODO: add flash or feedback here
-        if (health <= 0f)
-            Die();
+        
     }
 
-    private void Die()
-    {
-        
-        Destroy(gameObject);
-    }
+    
 
     private void BossSlam()
     {

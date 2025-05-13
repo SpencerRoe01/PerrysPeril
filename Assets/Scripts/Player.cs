@@ -118,6 +118,7 @@ public class Player : MonoBehaviour
         // Dash kill logic
         if (other.CompareTag("Enemy"))
         {
+
             var enemy = other.GetComponent<EnemyRoot>();
             if (enemy != null && enemy.IsStunned && IsDashing)
             {
@@ -125,6 +126,10 @@ public class Player : MonoBehaviour
                 dashCoolCounter = 0f;
                 killedAnEnemyOnDash = true;
             }
+        }
+        if (other.CompareTag("Boss"))
+        {
+            Destroy(other.gameObject);
         }
     }
 }

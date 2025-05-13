@@ -105,7 +105,7 @@ public class StatManager : MonoBehaviour{
         
         if (Player != null) 
         {
-            Debug.Log("Updaye");
+            
             Player.GetComponent<Player>().Health = Health;
             Player.GetComponent<Player>().PlayerMoveSpeed = Speed;
             Player.GetComponent<Player>().DashCooldown = DashCD;

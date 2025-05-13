@@ -81,7 +81,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: -6248741079362886434, guid: a2f9c38af6ad43549bd9fa708f7bc549, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -189,8 +189,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df8f542e5959436469c9dd4b35b8a2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 20
+  MaxHealth: 15
   InvincibilityDuration: 1
+  health: 0
   Player: {fileID: 0}
   Projectile1: {fileID: 5405752648547703117, guid: a25c770410d93c64f9450122b91d7b08, type: 3}
   rb: {fileID: 5744522519446950013}
@@ -198,6 +199,7 @@ MonoBehaviour:
   dashDuration: 0.2
   dashPause: 2
   dashCount: 3
+  StunnedBoss: {fileID: 5579598368946785039, guid: a53eeeca051419a4fad8f2d1e096c3d6, type: 3}
 --- !u!58 &8366727116188335854
 CircleCollider2D:
   m_ObjectHideFlags: 0

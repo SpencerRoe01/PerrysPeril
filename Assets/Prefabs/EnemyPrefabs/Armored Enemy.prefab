@@ -187,7 +187,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 5809030516613042957, guid: 7090287ab1e64e045aaaef11601b46e8, type: 3}
+  m_Sprite: {fileID: 3780428113675264583, guid: 2ba15dd60284e104289d99bb3ea7894e, type: 3}
   m_Color: {r: 1, g: 0.93345404, b: 0.42830187, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -236,7 +236,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 1.9}
+    oldSize: {x: 1.4, y: 3}
     newSize: {x: 0.8, y: 1.9}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 8232526665926327373}
   m_Layer: 3
   m_Name: Armored Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -528,7 +528,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
