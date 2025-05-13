@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Environemnt
   - Environment
+  - IDK
+  - Boss
   layers:
   - Default
   - TransparentFX
