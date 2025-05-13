@@ -72,6 +72,7 @@ public class Combo : MonoBehaviour
         ComboText.text = "Combo: " + gradeLevels[currentGradeIndex];
         ComboText.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3);
         ComboBar.gameObject.transform.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3);
+
     }
 
     public void RegisterKill() => AddCombo(killValue);
@@ -82,5 +83,13 @@ public class Combo : MonoBehaviour
     {
         comboValue = Mathf.Clamp(comboValue + amount, 0f, maxComboValue);
         timeSinceAdd = 0f;
+    }
+
+    public void ClearCombo()
+    {
+        comboValue = 0f;
+        currentGradeIndex = 0;
+        downgradeTimer = 0f;
+        timeSinceAdd = Mathf.Infinity;
     }
 }

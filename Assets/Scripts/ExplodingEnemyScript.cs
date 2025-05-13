@@ -37,7 +37,7 @@ public class ExplodingEnemyScript : MonoBehaviour
         SoundManager.GetComponent<SoundManager>().PlayBombExplosion();
         LevelManager.EnemiesInScene.Remove(transform.parent.gameObject);
         Destroy(Instantiate(Explosion, transform.position,Quaternion.identity),3);
-        transform.parent.transform.GetChild(0).GetComponent<EnemyRoot>().DestroyEnemy();
+        transform.parent.transform.GetChild(0).GetComponent<EnemyRoot>().DestroyEnemy(true);
 
 
 

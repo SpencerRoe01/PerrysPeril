@@ -423,9 +423,9 @@ MonoBehaviour:
   AllUpgradesUsed: 0
   LevelManager: {fileID: 0}
   UpgradesAvalable: 2
-  MaxSpeed: 4
-  MaxDashCD: 4
-  MaxDashLen: 4
+  MaxSpeed: 18
+  MaxDashCD: 1
+  MaxDashLen: 6
   MaxPerfectParryLen: 12
   StatManager: {fileID: 0}
   UpgradePoints: {fileID: 1025894041}

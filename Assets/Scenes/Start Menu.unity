@@ -827,7 +827,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 82678091630505806, guid: 2c2383dcdf7943940ac763c05b8b3315, type: 3}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LoadIntroCutscene
+        m_MethodName: LoadLevel1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1162,10 +1162,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f7bfa7ccc072a245bcf86266e0e2868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 0
+  Speed: 10
   DashCD: 2
   DashLength: 0.2
-  Health: 3
+  Health: 4
   PerfectParryRad: 8
   SUpgradeLevel: 0
   DCDUpgradeLevel: 0
@@ -2819,6 +2819,7 @@ MonoBehaviour:
   - {fileID: 3949686633200297903, guid: bef37df436ea6a24c87e8e34820c23fc, type: 3}
   - {fileID: 809202600740939711, guid: 11f318039efad5e41877fd78ef94d45e, type: 3}
   Level3EnemiesToSpawn:
+  - {fileID: 7983324406504466627, guid: fdcd9e36b72685344b1dd2494586ea14, type: 3}
   - {fileID: 7983324406504466627, guid: fdcd9e36b72685344b1dd2494586ea14, type: 3}
   - {fileID: 7983324406504466627, guid: fdcd9e36b72685344b1dd2494586ea14, type: 3}
   - {fileID: 7983324406504466627, guid: fdcd9e36b72685344b1dd2494586ea14, type: 3}

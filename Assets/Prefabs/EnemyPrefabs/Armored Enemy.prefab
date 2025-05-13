@@ -138,10 +138,11 @@ MonoBehaviour:
   IsStunned: 0
   StunDuration: 4
   IsRoamingEnemy: 0
+  IsArmored: 1
   Animator: {fileID: 2148238534233818055}
   LevelManager: {fileID: 0}
   AiPath: {fileID: 3229158300962691910}
-  IsArmored: 1
+  DeathParticle: {fileID: 6664056089347434267, guid: ac52bee213443514cb116521d890a0dd, type: 3}
 --- !u!212 &1125612878260210538
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -457,7 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8ed5ab37a653a243bc31baf8332f7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BulletPrefab: {fileID: 5405752648547703117, guid: c48dbb07e77e33f428265b17ebae8203, type: 3}
+  BulletPrefab: {fileID: 5405752648547703117, guid: a25c770410d93c64f9450122b91d7b08, type: 3}
   Player: {fileID: 4666771089333739229, guid: 0e8b0cad60271bf4fb257a4e5faa5719, type: 3}
   BulletMoveSpeed: 12
   BurstCount: 1

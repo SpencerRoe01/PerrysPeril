@@ -121,7 +121,7 @@ public class Player : MonoBehaviour
             var enemy = other.GetComponent<EnemyRoot>();
             if (enemy != null && enemy.IsStunned && IsDashing)
             {
-                enemy.DestroyEnemy();
+                enemy.DestroyEnemy(false);
                 dashCoolCounter = 0f;
                 killedAnEnemyOnDash = true;
             }

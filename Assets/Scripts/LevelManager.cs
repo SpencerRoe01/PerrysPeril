@@ -116,6 +116,7 @@ public class LevelManager : MonoBehaviour
         else if (!isUpgradeLevel)
         {
             Debug.Log("Loading upgrade level");
+            GameObject.Find("StatManager").GetComponent<StatManager>().Health = GameObject.Find("PerryRoot").GetComponent<Player>().Health;
             StartCoroutine(DelaySceneLoad(4f, "UpgradeScene"));
         }
         else if (GameObject.Find("UpgradeManager") != null && GameObject.Find("UpgradeManager").GetComponent<UpgradeClass>().AllUpgradesUsed)
@@ -152,6 +153,7 @@ public class LevelManager : MonoBehaviour
         if (levelOrSceneName is int)
         {
             SceneManager.LoadScene((int)levelOrSceneName);
+            GameObject.Find("ComboManager").GetComponent<Combo>().ClearCombo();
         }
         else if (levelOrSceneName is string && (string)levelOrSceneName == "UpgradeScene")
         {

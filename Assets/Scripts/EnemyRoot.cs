@@ -5,143 +5,141 @@ using UnityEngine.SceneManagement;
 
 public class EnemyRoot : MonoBehaviour
 {
+    [Header("Stats")]
     public int Health;
     public float MoveSpeed;
     public bool IsStunned;
     public float StunDuration;
     public bool IsRoamingEnemy;
-
-    public Animator Animator;
-
-    private Coroutine stunCoroutine;
-    public LevelManager LevelManager;
-
-    public AIPath AiPath;
-
     public bool IsArmored;
 
+    [Header("I-Frames")]
+    // fixed 1-second invincibility after taking damage
+    private float invincibilityCounter = 0f;
+
+    [Header("References")]
+    public Animator Animator;
+    public LevelManager LevelManager;
+    public AIPath AiPath;
+    private Coroutine stunCoroutine;
+
+    public GameObject DeathParticle;
 
     private void Start()
     {
+        // Set move speed
         transform.parent.gameObject.GetComponent<AIPath>().maxSpeed = MoveSpeed;
         transform.parent.GetComponent<Shooter>().Player = GameObject.FindGameObjectWithTag("Player");
-
     }
-    
 
     private void Update()
     {
-        if (IsArmored) 
+
+        LevelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+
+        // Countdown i-frames
+        if (invincibilityCounter > 0f)
+            invincibilityCounter -= Time.deltaTime;
+
+        // Armored visual toggle
+        if (IsArmored)
         {
-            gameObject.transform.GetChild(0).gameObject.SetActive(Health > 1);
+            transform.parent.GetChild(1).gameObject.SetActive(Health > 1);
         }
 
+        // Flip to face player
         Transform parent = transform.parent;
         Vector3 parentScale = parent.localScale;
         float xScale = Mathf.Abs(parentScale.x);
+        var playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
+        parent.localScale = new Vector3(
+            playerPos.x > transform.position.x ? xScale : -xScale,
+            parentScale.y,
+            parentScale.z);
 
-        if (GameObject.FindGameObjectWithTag("Player").transform.position.x > transform.position.x)
-            parent.localScale = new Vector3(xScale, parentScale.y, parentScale.z);
-        else
-            parent.localScale = new Vector3(-xScale, parentScale.y, parentScale.z);
+        // Animation parameters
+        Animator.SetBool("moving", !AiPath.reachedDestination);
 
-
-        if (AiPath.reachedDestination) { Animator.SetBool("moving", false); }
-        else {Animator.SetBool("moving", true); }
-
-
-            LevelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-        if (transform.parent.Find("ExplodeRad") != null) 
+        // Exploding enemy override
+        var explodeRad = transform.parent.Find("ExplodeRad");
+        if (explodeRad != null && explodeRad.GetComponent<ExplodingEnemyScript>().Exploding)
         {
-            if (transform.parent.Find("ExplodeRad").GetComponent<ExplodingEnemyScript>().Exploding) 
-            {
-                Health = 1;
-            }
-        }
-
-        if (Health <= 0) 
-        {
-            IsStunned = true;
-            GameObject.Find("ComboManager").GetComponent<Combo>().RegisterStun();
-        }
-
-        if (Health <= 0)
-        {
-           
-            //play stun animation
-
-
-            gameObject.GetComponent<SpriteRenderer>().enabled = true;
-            foreach (Behaviour behaviour in transform.parent.GetComponents<Behaviour>())
-            {
-                behaviour.enabled = false;
-
-            }
-            transform.parent.GetComponent<SpriteRenderer>().enabled = false;
-
-
-            if (stunCoroutine == null)
-            {
-                 stunCoroutine = StartCoroutine(StunCoroutine(StunDuration));
-            }
             Health = 1;
-
-
-
-
         }
-        
-        
-    }
-    public void PlayShootAnimation()
-    {
-        Animator.SetTrigger("shoot");
-    }
-    
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.tag == "Projectile" )
+
+        // Check stun / death
+        if (Health <= 0 && !IsStunned)
         {
-            if (other.gameObject.GetComponent<Projectile>() != null && other.gameObject.GetComponent<Projectile>().isEnemyProjectile == false)
-            {
-                Health -= 1;
-                
-                other.gameObject.GetComponent<Projectile>().DestoyProjectile();
-            }
-            else if (other.gameObject.GetComponent<Projectile>() == null)
-            {
-                Health -= 1;
-            }
-            
-
+            TriggerStun();
         }
-
     }
+
+    private void TriggerStun()
+    {
+        IsStunned = true;
+        GameObject.Find("ComboManager").GetComponent<Combo>().RegisterStun();
+
+        // Disable visuals & AI
+        GetComponent<SpriteRenderer>().enabled = true;
+        foreach (Behaviour beh in transform.parent.GetComponents<Behaviour>())
+            beh.enabled = false;
+        transform.parent.GetComponent<SpriteRenderer>().enabled = false;
+
+        // Start stun recovery
+        if (stunCoroutine == null)
+            stunCoroutine = StartCoroutine(StunCoroutine(StunDuration));
+
+        Health = 1; // survive with 1 health
+    }
+
     private IEnumerator StunCoroutine(float duration)
     {
-       
         yield return new WaitForSeconds(duration);
         IsStunned = false;
-        
 
-        gameObject.GetComponent<SpriteRenderer>().enabled = false;
-        foreach (Behaviour behaviour in transform.parent.GetComponents<Behaviour>())
-        {
-            behaviour.enabled = true;
-
-        }
+        // Restore AI & visuals
+        GetComponent<SpriteRenderer>().enabled = false;
+        foreach (Behaviour beh in transform.parent.GetComponents<Behaviour>())
+            beh.enabled = true;
         transform.parent.GetComponent<SpriteRenderer>().enabled = true;
 
         stunCoroutine = null;
     }
-    public void DestroyEnemy() 
+
+    public void OnTriggerEnter2D(Collider2D other)
     {
-        LevelManager.EnemiesInScene.Remove(transform.parent.gameObject);
-        Destroy(gameObject.transform.parent.gameObject);
-        GameObject.Find("ComboManager").GetComponent<Combo>().RegisterKill();
+        if (other.CompareTag("Projectile"))
+        {
+            var proj = other.GetComponent<Projectile>();
+            bool isPlayerProj = (proj != null && !proj.isEnemyProjectile) || proj == null;
+
+            if (isPlayerProj && invincibilityCounter <= 0f)
+            {
+                // Take damage and start i-frames
+                Health -= 1;
+                invincibilityCounter = 1f;
+
+                if (proj != null)
+                    proj.DestoyProjectile();
+
+                // If killed outright
+                
+            }
+        }
     }
 
+    public void DestroyEnemy(bool explode)
+    {
+        LevelManager.EnemiesInScene.Remove(transform.parent.gameObject);
 
+        if (!explode)
+        {
+            GameObject p = Instantiate(DeathParticle, transform.position, transform.rotation);
+            GameObject.Find("ComboManager").GetComponent<Combo>().RegisterKill();
+            Destroy(p, 2f);
+        }
+        Destroy(transform.parent.gameObject);
+    }
 
    
 }

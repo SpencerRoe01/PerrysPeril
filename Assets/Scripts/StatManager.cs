@@ -45,11 +45,75 @@ public class StatManager : MonoBehaviour{
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        Player = GameObject.Find("Player");
-
-        if (SceneManager.GetActiveScene().name == "UpgradeScene"){
-            GameObject.Find("UpgradeManager").GetComponent<UpgradeClass>().UpgradesAvalable = 4;
+        switch (SUpgradeLevel) 
+        { 
+            case 1: Speed = 12;
+                break;
+            case 2: Speed = 14;
+                break;
+            case 3:
+                Speed = 16;
+                break;
+            case 4:
+                Speed = 18;
+                break;
         }
+        switch (DCDUpgradeLevel)
+        {
+            case 1:
+                DashCD = 2.5f;
+                break;
+            case 2:
+                DashCD = 2;
+                break;
+            case 3:
+                DashCD = 1.5f;
+                break;
+            case 4:
+                DashCD = 1;
+                break;
+        }
+        switch (DLUpgradeLevel)
+        {
+            case 1:
+                DashLength = .3f;
+                break;
+            case 2:
+                DashLength = .4f;
+                break;
+            case 3:
+                DashLength = .5f;
+                break;
+            case 4:
+                DashLength = .6f;
+                break;
+        }
+
+
+
+
+
+
+        Player = GameObject.Find("PerryRoot");
+
+        if (SceneManager.GetActiveScene().name == "UpgradeScene") {
+            GameObject.Find("UpgradeManager").GetComponent<UpgradeClass>().UpgradesAvalable = 4;
+            
+
+
+        }
+        
+        if (Player != null) 
+        {
+            Debug.Log("Updaye");
+            Player.GetComponent<Player>().Health = Health;
+            Player.GetComponent<Player>().PlayerMoveSpeed = Speed;
+            Player.GetComponent<Player>().DashCooldown = DashCD;
+            Player.GetComponent<Player>().DashLength = DashLength;
+            
+        }
+
+        
 
     }
 

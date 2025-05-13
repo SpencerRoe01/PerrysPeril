@@ -35,7 +35,7 @@ public class UpgradeClass : MonoBehaviour
         UpgradeValues.text = "Speed: " + StatManager.SUpgradeLevel + "\n" +
                              "Dash CD: " + StatManager.DCDUpgradeLevel + "\n" +
                              "Dash Length: " + StatManager.DLUpgradeLevel + "\n" +
-                             "Health: " + StatManager.HUpgradeLevel + "\n" +
+                             "Health: " + StatManager.Health + "\n" +
                              "PP Radius: " + StatManager.PPRUpgradeLevel;
     }
 
@@ -43,16 +43,16 @@ public class UpgradeClass : MonoBehaviour
     {
         if (StatManager.Speed < MaxSpeed && !AllUpgradesUsed) 
         {
-            StatManager.Speed++;
+            
             StatManager.SUpgradeLevel++;
             UpgradesAvalable--;
         }
     }
     public void UpgradeDashCD()
     {
-        if (StatManager.DashCD < MaxDashCD && !AllUpgradesUsed)
+        if (StatManager.DashCD > MaxDashCD && !AllUpgradesUsed)
         {
-            StatManager.DashCD -= 0.3f;
+            
             StatManager.DCDUpgradeLevel++;
             UpgradesAvalable--;
         }
@@ -61,17 +61,16 @@ public class UpgradeClass : MonoBehaviour
     {
         if (StatManager.DashLength < MaxDashLen && !AllUpgradesUsed) 
         {
-            StatManager.DashLength -= 0.1f;
+            
             StatManager.DLUpgradeLevel++;
             UpgradesAvalable--;
         }
     }
     public void UpgradeHealth()
     {
-        if (StatManager.Health < 5 && !AllUpgradesUsed) 
+        if (StatManager.Health < 4 && !AllUpgradesUsed) 
         {
             StatManager.Health++;
-            StatManager.HUpgradeLevel++;
             UpgradesAvalable--;
         }
     }
@@ -79,7 +78,7 @@ public class UpgradeClass : MonoBehaviour
     {
         if (StatManager.PerfectParryRad < MaxPerfectParryLen && !AllUpgradesUsed)
         {
-            StatManager.PerfectParryRad += 1;
+           
             StatManager.PPRUpgradeLevel++;
             UpgradesAvalable--;
         }

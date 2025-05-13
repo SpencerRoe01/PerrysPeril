@@ -108,7 +108,7 @@ public class Shooter : MonoBehaviour
 
             CurrentAngle = StartAngle;
             yield return new WaitForSeconds(TimeBetweenBursts);
-            EnemyRoot.PlayShootAnimation();
+            
 
 
         }
