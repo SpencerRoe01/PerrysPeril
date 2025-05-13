@@ -91,6 +91,10 @@ public class LevelManager : MonoBehaviour
         {
             CheckForUpgradeCompletion();
         }
+        if(Level3EnemiesToSpawn.Count == 0){
+            SoundManager = GameObject.Find("SoundManager");
+            SoundManager.GetComponent<SoundManager>().PlayBossTheme();
+        }
     }
 
     public void SpawnEnemy()
