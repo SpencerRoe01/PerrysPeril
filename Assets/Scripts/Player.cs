@@ -42,6 +42,15 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (Health <= 0)
+        {
+            SceneManager.LoadScene(8);
+
+
+        }
+
+
+
         // Update hearts UI
         for (int i = 0; i < Hearts.Length; i++)
             Hearts[i].SetActive(Health > i);

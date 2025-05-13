@@ -55,6 +55,7 @@ public class SoundManager : MonoBehaviour{
         ProjectileThrow.volume = SFXVolume/100f;
         BombFuse.volume = SFXVolume/100f;
     }
+     
     public int GetMusicVolume(){
         return MusicVolume;
     }
