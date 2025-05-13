@@ -68,7 +68,7 @@ public class Combo : MonoBehaviour
             downgradeTimer = downgradeCooldown;
         }
 
-        ComboBar.fillAmount = comboValue / maxComboValue;
+        ComboBar.transform.GetChild(0).GetComponent<Image>().fillAmount = comboValue / maxComboValue;
         ComboText.text = "Combo: " + gradeLevels[currentGradeIndex];
         ComboText.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3);
         ComboBar.gameObject.transform.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3);

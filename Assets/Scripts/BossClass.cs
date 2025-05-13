@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class BossClass : MonoBehaviour
@@ -11,6 +12,18 @@ public class BossClass : MonoBehaviour
 
     public GameObject Projectile1;
     public Animator BossAnimation;
+
+    public float dashSpeed = 10f;
+    public float dashDuration = 0.2f;
+    public float dashPause = 0.5f;
+    public int dashCount = 3;
+
+    public Rigidbody2D rb;
+    private bool isDashing = false;
+   
+
+
+
     void Start()
     {
         StartCoroutine(Boss());
@@ -19,7 +32,8 @@ public class BossClass : MonoBehaviour
     
     IEnumerator Boss()
     {
-        while ((MaxHealth / Health) > 0.7f ){
+        while ((Health / MaxHealth) > 0.7f )
+        {
 
 
             yield return new WaitForSeconds(1f);
@@ -27,7 +41,7 @@ public class BossClass : MonoBehaviour
             if (!isShooting) 
             {
                 StartCoroutine(ShootRoutine(75, 10, false, 1.5f, 5, false, Projectile1, 20, .5f));
-                Debug.Log("Shoot");
+                
             }
             while (isShooting) 
             { 
@@ -38,7 +52,7 @@ public class BossClass : MonoBehaviour
             if (!isShooting)
             {
                 StartCoroutine(ShootRoutine(359, 35, true, .5f, 2, true, Projectile1, 15, .2f));
-                Debug.Log("Shoot2"); 
+                
             }
             while (isShooting)
             {
@@ -46,11 +60,22 @@ public class BossClass : MonoBehaviour
             }
 
         }
-        while ((MaxHealth / Health) > 0.7f)
+        while ((Health / MaxHealth) <= 0.6f  )
         {
+            yield return new WaitForSeconds(1f);
 
+            BossAnimation.Play("BossSlam");
+            while (BossAnimation.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f && BossAnimation.GetCurrentAnimatorStateInfo(0).IsName("BossSlam")) 
+            {
+                yield return new WaitForSeconds(.005f);
+                
+            }
 
+            if (!isDashing)
+                StartCoroutine(DashRoutine());
+            yield return new WaitForSeconds(5f);
         }
+       
 
 
         yield break;
@@ -58,7 +83,7 @@ public class BossClass : MonoBehaviour
 
     private IEnumerator ShootRoutine(float AngleSpread, int ProjectilesPerBurst, bool Stagger , float TimeBetweenBursts , int BurstCount , bool Oscillate, GameObject BulletPrefab, float BulletMoveSpeed, float RestTime)
     {
-        Debug.Log("1");
+        
          isShooting = true;
 
         float StartAngle, CurrentAngle, AngleStep, EndAngle;
@@ -128,7 +153,7 @@ public class BossClass : MonoBehaviour
 
         yield return new WaitForSeconds(RestTime);
         isShooting = false;
-        Debug.Log("2");
+        
     }
     private void TargetConeOfInfluence(out float StartAngle, out float CurrentAngle, out float AngleStep, out float EndAngle, float AngleSpread, int ProjectilesPerBurst)
     {
@@ -162,10 +187,43 @@ public class BossClass : MonoBehaviour
     public void BossSlam() 
     
     {
-
+        
         StartCoroutine(ShootRoutine(359, 35, false, 0, 1, true, Projectile1, 15, .2f));
 
     }
 
-    
+
+   
+
+
+    IEnumerator DashRoutine()
+    {
+        isDashing = true;
+
+        for (int i = 0; i < dashCount; i++)
+        {
+            Debug.Log("Dash");
+            Vector2 direction = (Player.transform.position - transform.position).normalized;
+
+            // Flip sprite to face direction
+            if (direction.x > 0)
+                transform.localScale = new Vector3(1, 1, 1);
+            else
+                transform.localScale = new Vector3(-1, 1, 1);
+
+            float elapsed = 0f;
+            while (elapsed < dashDuration)
+            {
+                rb.MovePosition(rb.position + direction * dashSpeed * Time.fixedDeltaTime);
+                elapsed += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+
+            yield return new WaitForSeconds(dashPause);
+        }
+
+        isDashing = false;
+    }
+
+
 }
