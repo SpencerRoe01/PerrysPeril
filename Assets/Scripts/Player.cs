@@ -5,126 +5,131 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float PlayerMoveSpeed = 5f;       // Normal movement speed
-    public float SprintSpeed = 8f;           // Sprinting movement speed
-    private float PlayerMovementX = 0f;
-    private float PlayerMovementY = 0f;
+    [Header("Movement")]
+    public float PlayerMoveSpeed = 5f;
+    public float SprintSpeed = 8f;
+    public float DashSpeed = 15f;
 
-    public float ActiveMoveSpeed;
-    public float DashSpeed = 15f;            // Dash speed
+    [Header("Dash Settings")]
+    public float DashLength = 0.5f;
+    public float DashCooldown = 1f;
 
-    public float DashLength = 0.5f, DashCooldown = 1f;
-    public float DashCounter;
-    public float DashCoolCounter;
+    [Header("Health & I-Frames")]
+    public int Health = 3;
+    public float InvincibilityDuration = 1f; // seconds of invincibility after taking damage
 
-    public int Health;
-    public bool IsDashing;
+    private float playerMovementX = 0f;
+    private float playerMovementY = 0f;
+    private float activeMoveSpeed;
+    private float dashCounter;
+    private float dashCoolCounter;
+    private float invincibilityCounter;
 
-    private bool KilledAnEnemyOnDash;
+    public bool IsDashing { get; private set; }
+
+    private bool killedAnEnemyOnDash;
     private Vector2 dashDirection;
 
     public GameObject SoundManager;
+    public GameObject[] Hearts;
 
     void Start()
     {
-        ActiveMoveSpeed = PlayerMoveSpeed;
+        activeMoveSpeed = PlayerMoveSpeed;
+        invincibilityCounter = 0f;
     }
 
     void Update()
     {
-        // Only update movement inputs if not dashing
-        if (DashCounter <= 0)
-        {
-            PlayerMovementX = Input.GetAxisRaw("Horizontal");
-            PlayerMovementY = Input.GetAxisRaw("Vertical");
-        }
+        // Update hearts UI
+        for (int i = 0; i < Hearts.Length; i++)
+            Hearts[i].SetActive(Health > i);
 
-        // Dash initiation (using space key)
-        if (Input.GetKeyDown(KeyCode.Space))
+        // Countdown timers
+        if (dashCoolCounter > 0)
+            dashCoolCounter -= Time.deltaTime;
+        if (invincibilityCounter > 0)
+            invincibilityCounter -= Time.deltaTime;
+
+        if (!IsDashing)
         {
-            if (DashCoolCounter <= 0 && DashCounter <= 0)
+            // Allow normal movement
+            playerMovementX = Input.GetAxisRaw("Horizontal");
+            playerMovementY = Input.GetAxisRaw("Vertical");
+
+            // Handle sprint
+            activeMoveSpeed = Input.GetKey(KeyCode.LeftShift) ? SprintSpeed : PlayerMoveSpeed;
+
+            // Handle dash input
+            if (Input.GetKeyDown(KeyCode.Space) && dashCoolCounter <= 0f)
             {
                 SoundManager = GameObject.Find("SoundManager");
                 SoundManager.GetComponent<SoundManager>().PlayDashWoosh();
+
                 Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 dashDirection = ((Vector2)mousePos - (Vector2)transform.position).normalized;
-                ActiveMoveSpeed = DashSpeed;
-                DashCounter = DashLength;
-            }
-        }
 
-        // Handle dashing
-        if (DashCounter > 0)
-        {
-            IsDashing = true;
-            DashCounter -= Time.deltaTime;
-            GetComponent<Rigidbody2D>().linearVelocity = dashDirection * DashSpeed;
-
-            if (DashCounter <= 0)
-            {
-                // Reset to normal speed when dash ends
-                ActiveMoveSpeed = PlayerMoveSpeed;
-                if (!KilledAnEnemyOnDash)
-                {
-                    DashCoolCounter = DashCooldown;
-                }
-                KilledAnEnemyOnDash = false;
-            }
-        }
-        else
-        {
-            IsDashing = false;
-
-            // Sprinting: If the player holds Left Shift, use SprintSpeed
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                ActiveMoveSpeed = SprintSpeed;
+                IsDashing = true;
+                dashCounter = DashLength;
+                invincibilityCounter = DashLength;
+                GetComponent<Rigidbody2D>().linearVelocity = dashDirection * DashSpeed;
             }
             else
             {
-                ActiveMoveSpeed = PlayerMoveSpeed;
+                // Apply normal movement
+                GetComponent<Rigidbody2D>().linearVelocity = new Vector2(playerMovementX * activeMoveSpeed, playerMovementY * activeMoveSpeed);
             }
-
-            // Regular movement (sprint or normal) using current input values
-            GetComponent<Rigidbody2D>().linearVelocity = new Vector2(PlayerMovementX * ActiveMoveSpeed, PlayerMovementY * ActiveMoveSpeed);
         }
-
-        // Dash cooldown timer
-        if (DashCoolCounter > 0)
+        else // Currently dashing
         {
-            DashCoolCounter -= Time.deltaTime;
+            GetComponent<Rigidbody2D>().linearVelocity = dashDirection * DashSpeed;
+            dashCounter -= Time.deltaTime;
+
+            if (dashCounter <= 0f)
+            {
+                IsDashing = false;
+                activeMoveSpeed = PlayerMoveSpeed;
+                if (!killedAnEnemyOnDash)
+                {
+                    dashCoolCounter = DashCooldown;
+                }
+                killedAnEnemyOnDash = false;
+            }
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-
-        try
+        // Projectile damage
+        if (other.CompareTag("Projectile"))
         {
-            if (other.gameObject.tag == "Projectile")
-            {
-                var projectile = other.gameObject.GetComponent<Projectile>();
+            var projectile = other.GetComponent<Projectile>();
+            bool parryActive = GetComponent<Parry>().PerfectParryStunCollider.enabled;
 
-                if (projectile != null && projectile.isEnemyProjectile == true && !IsDashing && !GetComponent<Parry>().PerfectParryStunCollider.enabled)
-                {
-                    Health -= 1;
-                    projectile.DestoyProjectile();
-                }
+            if (projectile != null && projectile.isEnemyProjectile && invincibilityCounter <= 0f && !parryActive)
+            {
+                // Take damage and start i-frames
+                Health -= 1;
+                invincibilityCounter = InvincibilityDuration;
+                projectile.DestoyProjectile();
             }
         }
-        catch (NullReferenceException e)
-        {
-            Debug.Log(other);
-        }
 
-        if (other.gameObject.tag == "Enemy")
+        // Dash kill logic
+        if (other.CompareTag("Enemy"))
         {
-            if (other.gameObject.GetComponent<EnemyRoot>().IsStunned && IsDashing)
+
+            var enemy = other.GetComponent<EnemyRoot>();
+            if (enemy != null && enemy.IsStunned && IsDashing)
             {
-                other.gameObject.GetComponent<EnemyRoot>().DestroyEnemy();
-                DashCoolCounter = 0;
-                KilledAnEnemyOnDash = true;
+                enemy.DestroyEnemy(false);
+                dashCoolCounter = 0f;
+                killedAnEnemyOnDash = true;
             }
+        }
+        if (other.CompareTag("Boss"))
+        {
+            Destroy(other.gameObject);
         }
     }
 }

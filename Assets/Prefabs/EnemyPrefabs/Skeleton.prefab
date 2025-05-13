@@ -343,6 +343,8 @@ MonoBehaviour:
   Animator: {fileID: 5952738276622537605}
   LevelManager: {fileID: 0}
   AiPath: {fileID: 7792071585488217909}
+  IsArmored: 0
+  DeathParticle: {fileID: 6664056089347434267, guid: ac52bee213443514cb116521d890a0dd, type: 3}
 --- !u!212 &1393654980868149308
 SpriteRenderer:
   m_ObjectHideFlags: 0

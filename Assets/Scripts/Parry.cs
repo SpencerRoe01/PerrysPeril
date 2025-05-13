@@ -51,7 +51,7 @@ public class Parry : MonoBehaviour
     public void ParryMeathod(string name, Collider2D other)
     {
 
-        if (name == "WideParryCollider")
+        if (name == "WideParryCollider" && other.gameObject.GetComponent<Projectile>().MoveDirection != null)
         {
 
             Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

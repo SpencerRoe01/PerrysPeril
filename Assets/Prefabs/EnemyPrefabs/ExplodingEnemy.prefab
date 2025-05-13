@@ -85,6 +85,7 @@ MonoBehaviour:
   Particle: {fileID: 5344426800498080065}
   Explosion: {fileID: 4877231503394794067, guid: a5058154ce595c34cba71f762f3a4132, type: 3}
   LevelManager: {fileID: 0}
+  SoundManager: {fileID: 0}
 --- !u!1 &3949686633200297903
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,9 +438,11 @@ MonoBehaviour:
   IsStunned: 0
   StunDuration: 5
   IsRoamingEnemy: 0
+  IsArmored: 0
   Animator: {fileID: 498365422727576815}
   LevelManager: {fileID: 0}
   AiPath: {fileID: 2742228640518690130}
+  DeathParticle: {fileID: 6664056089347434267, guid: ac52bee213443514cb116521d890a0dd, type: 3}
 --- !u!58 &324159332107739673
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -520,8 +523,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4056058344551517612, guid: d1164054ec8d5a94baf92ddeb45b15dd, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 4475375876111409798, guid: 2ec90045a8febd5438e951c80b93176a, type: 3}
+  m_Color: {r: 1, g: 0.98105377, b: 0.33018857, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

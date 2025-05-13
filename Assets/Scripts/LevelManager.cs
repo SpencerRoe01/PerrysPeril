@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,6 +20,8 @@ public class LevelManager : MonoBehaviour
     public static int level;
 
     private static LevelManager instance;
+
+    public GameObject SoundManager;
 
     public bool NewSceneLoading;
     public bool isUpgradeLevel;
@@ -113,7 +116,9 @@ public class LevelManager : MonoBehaviour
         else if (!isUpgradeLevel)
         {
             Debug.Log("Loading upgrade level");
+            
             StartCoroutine(DelaySceneLoad(4f, "UpgradeScene"));
+            GameObject.Find("StatManager").GetComponent<StatManager>().Health = GameObject.Find("PerryRoot").GetComponent<Player>().Health;
         }
         else if (GameObject.Find("UpgradeManager") != null && GameObject.Find("UpgradeManager").GetComponent<UpgradeClass>().AllUpgradesUsed)
         {
@@ -149,6 +154,7 @@ public class LevelManager : MonoBehaviour
         if (levelOrSceneName is int)
         {
             SceneManager.LoadScene((int)levelOrSceneName);
+            GameObject.Find("ComboManager").GetComponent<Combo>().ClearCombo();
         }
         else if (levelOrSceneName is string && (string)levelOrSceneName == "UpgradeScene")
         {
@@ -183,8 +189,14 @@ public class LevelManager : MonoBehaviour
     }
     public void LoadLevel1()
     {
+        SoundManager = GameObject.Find("SoundManager");
+        SoundManager.GetComponent<SoundManager>().PlayBattleTheme();
         SceneManager.LoadScene(3);
         level = 3;
         
+    }
+    public void LoadIntroCutscene()
+    {
+        SceneManager.LoadScene(6);
     }
 }

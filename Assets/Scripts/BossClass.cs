@@ -1,65 +1,94 @@
-﻿using System.Collections;
+﻿using Pathfinding;
+using System.Collections;
 using UnityEngine;
 
 public class BossClass : MonoBehaviour
 {
-    public float Health;
-    public float MaxHealth;
-    public int BossPhase;
-    public GameObject Player;
-    bool isShooting;
+    [Header("Health & I-Frames")]
+    public float MaxHealth = 10f;
+    [Tooltip("Seconds of invincibility after taking damage")] public float InvincibilityDuration = 1f;
 
+    public float health;
+    private float invincibilityCounter = 0f;
+
+    [Header("References")]
+    public GameObject Player;
     public GameObject Projectile1;
-    public Animator BossAnimation;
+    public Rigidbody2D rb;
+    private AIPath aiPath;
+
+    [Header("Dash Settings")]
+    public float dashSpeed = 10f;
+    public float dashDuration = 0.2f;
+    public float dashPause = 0.5f;
+    public int dashCount = 3;
+    private bool isDashing = false;
+
+    private bool isShooting = false;
+
+    public GameObject StunnedBoss;
+
+    void Awake()
+    {
+        health = MaxHealth;
+        aiPath = GetComponent<AIPath>();
+    }
+
+    void Update()
+    {
+        Player = GameObject.Find("PerryRoot").gameObject;
+        if (health <= 0) 
+        {
+            Instantiate(StunnedBoss, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+
+
+        // Countdown invincibility timer
+        if (invincibilityCounter > 0f)
+            invincibilityCounter -= Time.deltaTime;
+    }
+
     void Start()
     {
         StartCoroutine(Boss());
     }
 
-    
     IEnumerator Boss()
     {
-        while ((MaxHealth / Health) > 0.7f ){
-
-
-            yield return new WaitForSeconds(1f);
-
-            if (!isShooting) 
-            {
-                StartCoroutine(ShootRoutine(75, 10, false, 1.5f, 5, false, Projectile1, 20, .5f));
-                Debug.Log("Shoot");
-            }
-            while (isShooting) 
-            { 
-                yield return new WaitForSeconds(.5f);
-            }
-            yield return new WaitForSeconds(.5f);
-
-            if (!isShooting)
-            {
-                StartCoroutine(ShootRoutine(359, 35, true, .5f, 2, true, Projectile1, 15, .2f));
-                Debug.Log("Shoot2"); 
-            }
-            while (isShooting)
-            {
-                yield return new WaitForSeconds(.5f);
-            }
-
-        }
-        while ((MaxHealth / Health) > 0.7f)
+        // Phase 1: ranged attacks
+        while (health / MaxHealth > 0.7f)
         {
+            yield return new WaitForSeconds(1f);
+            if (!isShooting)
+                StartCoroutine(ShootRoutine(75, 10, false, 1.5f, 5, false, Projectile1, 20, .5f));
 
+            while (isShooting)
+                yield return new WaitForSeconds(.5f);
 
+            yield return new WaitForSeconds(.5f);
+            if (!isShooting)
+                StartCoroutine(ShootRoutine(359, 35, true, .5f, 2, true, Projectile1, 15, .2f));
+
+            while (isShooting)
+                yield return new WaitForSeconds(.5f);
         }
 
-
-        yield break;
+        // Phase 2: dashing
+        while (health / MaxHealth <= 0.6f)
+        {
+            yield return new WaitForSeconds(2f);
+            if (!isDashing)
+                StartCoroutine(DashRoutine());
+            yield return new WaitForSeconds(5f);
+        }
     }
 
-    private IEnumerator ShootRoutine(float AngleSpread, int ProjectilesPerBurst, bool Stagger , float TimeBetweenBursts , int BurstCount , bool Oscillate, GameObject BulletPrefab, float BulletMoveSpeed, float RestTime)
+    private IEnumerator ShootRoutine(float AngleSpread, int ProjectilesPerBurst, bool Stagger, float TimeBetweenBursts,
+        int BurstCount, bool Oscillate, GameObject BulletPrefab, float BulletMoveSpeed, float RestTime)
     {
-        Debug.Log("1");
-         isShooting = true;
+        isShooting = true;
+        isShooting = true;
 
         float StartAngle, CurrentAngle, AngleStep, EndAngle;
         float TimeBetweenProjectiles = 0;
@@ -121,15 +150,17 @@ public class BossClass : MonoBehaviour
 
             CurrentAngle = StartAngle;
             yield return new WaitForSeconds(TimeBetweenBursts);
-            
+
 
 
         }
 
         yield return new WaitForSeconds(RestTime);
         isShooting = false;
-        Debug.Log("2");
+
+        
     }
+
     private void TargetConeOfInfluence(out float StartAngle, out float CurrentAngle, out float AngleStep, out float EndAngle, float AngleSpread, int ProjectilesPerBurst)
     {
         Vector2 TargetDirection = Player.transform.position - transform.position;
@@ -150,6 +181,7 @@ public class BossClass : MonoBehaviour
         }
     }
 
+
     private Vector2 FindBulletSpawnPosition(float CurrentAngle)
     {
         float x = transform.position.x + 1 * Mathf.Cos(CurrentAngle * Mathf.Deg2Rad);
@@ -159,13 +191,63 @@ public class BossClass : MonoBehaviour
         return Position;
     }
 
-    public void BossSlam() 
     
+
+
+    IEnumerator DashRoutine()
     {
+        aiPath.enabled = false;
+        isDashing = true;
 
-        StartCoroutine(ShootRoutine(359, 35, false, 0, 1, true, Projectile1, 15, .2f));
+        for (int i = 0; i < dashCount; i++)
+        {
+            Vector2 direction = (Player.transform.position - transform.position).normalized;
+            // Flip sprite to face direction
+            transform.localScale = new Vector3(Mathf.Sign(direction.x) * 2, 2, 2);
 
+            float elapsed = 0f;
+            while (elapsed < dashDuration)
+            {
+                rb.MovePosition(rb.position + direction * dashSpeed * Time.fixedDeltaTime);
+                elapsed += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+            BossSlam();
+            yield return new WaitForSeconds(dashPause);
+        }
+
+        isDashing = false;
+        aiPath.enabled = true;
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Projectile"))
+        {
+            var proj = other.GetComponent<Projectile>();
+            bool isPlayerProjectile = (proj != null && !proj.isEnemyProjectile) || proj == null;
+
+            if (isPlayerProjectile && invincibilityCounter <= 0f)
+            {
+                TakeDamage(1f);
+                if (proj != null)
+                    proj.DestoyProjectile();
+            }
+        }
+    }
+
+    private void TakeDamage(float amount)
+    {
+        health -= amount;
+        invincibilityCounter = InvincibilityDuration;
+        // TODO: add flash or feedback here
+        
     }
 
     
+
+    private void BossSlam()
+    {
+        StartCoroutine(ShootRoutine(359, 35, false, 0f, 1, true, Projectile1, 15f, .2f));
+    }
 }
