@@ -23,5 +23,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level3.unity
     guid: 1e4d0793df2ac36438a7f5a07f8fdb4c
+  - enabled: 1
+    path: Assets/Scenes/IntroCutScene.unity
+    guid: 1d3e3dfb32cefcf408e340abcfa45c66
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
