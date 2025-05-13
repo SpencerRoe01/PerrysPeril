@@ -309,7 +309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6895989782956743873, guid: d343823b566186a46adba1a23d454d58, type: 3}
       propertyPath: showGraphs
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6895989782956743873, guid: d343823b566186a46adba1a23d454d58, type: 3}
       propertyPath: maxFrameTime
