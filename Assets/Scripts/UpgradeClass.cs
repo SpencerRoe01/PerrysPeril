@@ -11,7 +11,7 @@ public class UpgradeClass : MonoBehaviour
 
     public int MaxSpeed;
     public int MaxDashCD;
-    public int MaxDashLen;
+    public float MaxDashLen;
     public int MaxPerfectParryLen;
 
     public StatManager StatManager;

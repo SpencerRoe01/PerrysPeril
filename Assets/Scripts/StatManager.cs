@@ -76,16 +76,16 @@ public class StatManager : MonoBehaviour{
         switch (DLUpgradeLevel)
         {
             case 1:
-                DashLength = .3f;
+                DashLength = .2f;
                 break;
             case 2:
-                DashLength = .4f;
+                DashLength = .22f;
                 break;
             case 3:
-                DashLength = .5f;
+                DashLength = .24f;
                 break;
             case 4:
-                DashLength = .6f;
+                DashLength = .28f;
                 break;
         }
 

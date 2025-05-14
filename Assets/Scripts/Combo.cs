@@ -70,8 +70,8 @@ public class Combo : MonoBehaviour
 
         ComboBar.transform.GetChild(0).GetComponent<Image>().fillAmount = comboValue / maxComboValue;
         ComboText.text = "Combo: " + gradeLevels[currentGradeIndex];
-        ComboText.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3);
-        ComboBar.gameObject.transform.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3);
+        ComboText.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3 && SceneManager.GetActiveScene().buildIndex < 6 );
+        ComboBar.gameObject.transform.gameObject.SetActive(SceneManager.GetActiveScene().buildIndex >= 3 && SceneManager.GetActiveScene().buildIndex < 6);
 
     }
 
