@@ -26,6 +26,8 @@ public class LevelManager : MonoBehaviour
     public bool NewSceneLoading;
     public bool isUpgradeLevel;
 
+    public bool IsBossThemePlaying;
+
     void Awake()
     {
         if (instance == null)
@@ -91,9 +93,10 @@ public class LevelManager : MonoBehaviour
         {
             CheckForUpgradeCompletion();
         }
-        if(Level3EnemiesToSpawn.Count == 0){
+        if(Level3EnemiesToSpawn.Count == 0 && !IsBossThemePlaying){
             SoundManager = GameObject.Find("SoundManager");
             SoundManager.GetComponent<SoundManager>().PlayBossTheme();
+            IsBossThemePlaying = true;
         }
     }
 
